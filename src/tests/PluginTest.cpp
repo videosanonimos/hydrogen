@@ -23,19 +23,11 @@
 #include "PluginTest.h"
 
 #include <unistd.h>
+#include <vector>
+#include <iostream>
 
-#include <core/Basics/Drumkit.h>
-#include <core/Basics/Pattern.h>
-#include <core/Basics/Instrument.h>
-#include <core/Basics/InstrumentList.h>
-#include <core/Basics/InstrumentLayer.h>
-#include <core/Basics/InstrumentComponent.h>
-#include <core/Basics/Sample.h>
-#include <core/Basics/Playlist.h>
-
-#include <core/Helpers/Filesystem.h>
-#include <core/Helpers/Xml.h>
-#include "TestHelper.h"
+#include <core/config.h>
+#include <core/FX/Effects.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION( PluginTest );
 
@@ -45,7 +37,7 @@ void PluginTest::testCompiledWindowsLadspaBundle()
   std::vector<H2Core::LadspaFXInfo*> pluginList =
     H2Core::Effects::get_instance()->getPluginList();
 
-  qDebug() << "number of plugins: " << pluginList.size();
+  std::cout << "number of plugins: " << pluginList.size() << std::endl;
 
   // Number of plugins installed with Hydrogen on Windows
   CPPUNIT_ASSERT( pluginList.size() == 31 );
