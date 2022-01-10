@@ -123,11 +123,11 @@ for:
           dir "c:\%PROGRAM_FILES%\JACK2"
           dir "c:\%PROGRAM_FILES%\JACK2\lib"
 
-	  REM *** Copy prebuilt LADSPA bundle ***
-	  cd windows\cmt_src
-	  make install
-	  cd ..\..
-	  
+          REM *** Copy prebuilt LADSPA bundle ***
+          cd windows\cmt_src
+          make install
+          cd ..\..
+
           REM *** Install dependencies ***
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libarchive
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libsndfile
