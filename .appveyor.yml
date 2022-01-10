@@ -1,6 +1,6 @@
 environment:
   GENERATOR: "MinGW Makefiles"
-  ARTIFACT_BRANCH: master-artifacts
+  ARTIFACT_BRANCH: phil-windows-ladspa-artifacts
   matrix:
 
     - job_name: 'Ubuntu 20.04'
