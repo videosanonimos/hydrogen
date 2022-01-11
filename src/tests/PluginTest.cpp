@@ -21,7 +21,9 @@
  */
 
 #include "PluginTest.h"
+#include "TestHelper.h"
 
+#include <QStringList>
 #include <unistd.h>
 #include <vector>
 #include <iostream>
@@ -34,10 +36,14 @@ CPPUNIT_TEST_SUITE_REGISTRATION( PluginTest );
 void PluginTest::testCompiledWindowsLadspaBundle()
 {
 #ifdef WIN32
+	QStringList ladspaDataPath = { TestHelper::get_instance()->getDataDir() + "plugins" };
   std::vector<H2Core::LadspaFXInfo*> pluginList =
-    H2Core::Effects::get_instance()->getPluginList();
+	  H2Core::Effects::get_instance()->getPluginList( ladspaDataPath );
 
-  std::cout << "number of plugins: " << pluginList.size() << std::endl;
+  if ( pluginList.size() != 31 ) {
+	  std::cout << "Expected number of plugins: 31 - actual number: "
+				<< pluginList.size() << std::endl;
+  }
 
   // Number of plugins installed with Hydrogen on Windows
   CPPUNIT_ASSERT( pluginList.size() == 31 );
