@@ -600,6 +600,9 @@ void Hydrogen::restartDrivers()
 
 bool Hydrogen::startExportSession(int sampleRate, int sampleDepth )
 {
+	std::cout << std::endl << "[startExportSession] " << sampleRate
+			  << " : " << sampleDepth << std::endl;
+	
 	AudioEngine* pAudioEngine = m_pAudioEngine;
 	
 	if ( pAudioEngine->getState() == AudioEngine::State::Playing ) {
@@ -640,6 +643,8 @@ bool Hydrogen::startExportSession(int sampleRate, int sampleDepth )
 /// Export a song to a wav file
 void Hydrogen::startExportSong( const QString& filename)
 {
+	std::cout << std::endl << "[startExportSong] " << std::endl;
+	
 	AudioEngine* pAudioEngine = m_pAudioEngine;
 	pAudioEngine->reset( false );
 	pAudioEngine->play();

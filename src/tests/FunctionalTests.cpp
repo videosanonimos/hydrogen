@@ -252,6 +252,10 @@ private:
 	 **/
 	void exportSong( const QString &songFile, const QString &fileName )
 	{
+
+		std::cout << std::endl << "[exportSong] " <<
+			songFile.toLocal8Bit().data() << std::endl;
+		
 		auto t0 = std::chrono::high_resolution_clock::now();
 
 		Hydrogen *pHydrogen = Hydrogen::get_instance();

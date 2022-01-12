@@ -53,6 +53,8 @@ pthread_t diskWriterDriverThread;
 
 void* diskWriterDriver_thread( void* param )
 {
+
+	std::cout << std::endl << "[diskWriterDriver_thread]" << std::endl;
 	Base * __object = ( Base * )param;
 	DiskWriterDriver *pDriver = ( DiskWriterDriver* )param;
 
@@ -313,6 +315,7 @@ DiskWriterDriver::DiskWriterDriver( audioProcessCallback processCallback, unsign
 		, m_nBufferSize( 0 )
 		, m_pOut_L( nullptr )
 		, m_pOut_R( nullptr ) {
+	std::cout << std::endl << "[DiskWriterDriver::DiskWriterDriver]" << std::endl;
 }
 
 
@@ -325,6 +328,7 @@ DiskWriterDriver::~DiskWriterDriver() {
 int DiskWriterDriver::init( unsigned nBufferSize )
 {
 	INFOLOG( QString( "Init, buffer size: %1" ).arg( nBufferSize ) );
+	std::cout << std::endl << "[DiskWriterDriver::init]" << std::endl;
 
 	m_nBufferSize = nBufferSize;
 
@@ -339,6 +343,7 @@ int DiskWriterDriver::init( unsigned nBufferSize )
 int DiskWriterDriver::connect()
 {
 	INFOLOG( "" );
+	std::cout << std::endl << "[DiskWriterDriver::connect]" << std::endl;
 	
 	m_pOut_L = new float[ m_nBufferSize ];
 	m_pOut_R = new float[ m_nBufferSize ];
