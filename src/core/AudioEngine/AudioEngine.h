@@ -291,9 +291,6 @@ public:
 	 */
 	void			startAudioDrivers();
 	/**
-	 * Assign an INITIATED audio driver.*/
-	void			setAudioDrivers( AudioOutput* pAudioDriver );
-	/**
 	 * Stops all audio and MIDI drivers.
 	 */
 	void			stopAudioDrivers();
@@ -311,7 +308,7 @@ public:
 	void			renameJackPorts(std::shared_ptr<Song> pSong);
 	
  
-	void			setAudioDriver( AudioOutput* pAudioDriver );
+	void			setAudioDriver( AudioOutput* pAudioDriver, bool bConnect = true );
 	AudioOutput*	getAudioDriver() const;
 
 	/* retrieve the midi (input) driver */

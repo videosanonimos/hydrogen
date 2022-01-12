@@ -1071,10 +1071,10 @@ void AudioEngine::startAudioDrivers()
 	mx.unlock();
 	this->unlock();
 
-	setAudioDriver( pAudioDriver );
+	setAudioDriver( pAudioDriver, true );
 }
 	
-void AudioEngine::setAudioDriver( AudioOutput* pAudioDriver ) {
+void AudioEngine::setAudioDriver( AudioOutput* pAudioDriver, bool bConnect ) {
 
 	std::cout << std::endl << "[AudioEngine::setAudioDriver]" << std::endl;
 	INFOLOG( "" );
@@ -1108,8 +1108,7 @@ void AudioEngine::setAudioDriver( AudioOutput* pAudioDriver ) {
 	mx.unlock();
 	this->unlock();
 	
-	if ( m_pAudioDriver != nullptr &&
-		 m_pAudioDriver->class_name() != DiskWriterDriver::_class_name() ) {
+	if ( m_pAudioDriver != nullptr && bConnect ) {
 		std::cout << std::endl << "[AudioEngine::setAudioDriver] connect 0 : " <<
 			m_pAudioDriver->class_name() << " != "
 				  << DiskWriterDriver::_class_name() << std::endl;

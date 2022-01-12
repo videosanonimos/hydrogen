@@ -634,7 +634,7 @@ bool Hydrogen::startExportSession(int sampleRate, int sampleDepth )
 	}
 	m_bExportSessionIsActive = true;
 	
-	pAudioEngine->setAudioDriver( pNewDriver );
+	pAudioEngine->setAudioDriver( pNewDriver, false );
 	pAudioEngine->setupLadspaFX();
 
 	return true;
