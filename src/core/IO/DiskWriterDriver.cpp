@@ -20,7 +20,7 @@
  *
  */
 #include <unistd.h>
-
+#include <iostream>
 
 #include <core/Preferences/Preferences.h>
 #include <core/AudioEngine/AudioEngine.h>
@@ -97,6 +97,14 @@ void* diskWriterDriver_thread( void* param )
 	soundInfo.format =  sfformat|bits;
 
 //	#ifdef HAVE_OGGVORBIS
+
+	std::cout << std::endl << std::endl
+			  << "Sample Rate: " << pDriver->m_nSampleRate << std::endl
+			  << "Channels: " << soundInfo.channels << std::endl
+			  << "Filename: " << pDriver->m_sFilename.toLocal8Bit().data() << std::endl
+			  << "Sample Depth: " << pDriver->m_nSampleDepth << std::endl
+			  << "Bits: " << bits << std::endl
+			  << "SFFormat: " << sfformat << std::endl << std::endl;
 
 	//ogg vorbis option
 	if( pDriver->m_sFilename.endsWith( ".ogg" ) | pDriver->m_sFilename.endsWith( ".OGG" ) ) {
@@ -264,6 +272,8 @@ void* diskWriterDriver_thread( void* param )
 					pData[ ii * 2 + 1 ] = pData_R[ ii ];
 				}
 			}
+
+			std::cout << "wrote: " << nFrameNumber << std::endl;
 			
 			int res = sf_writef_float( m_file, pData, nBufferWriteLength );
 			if ( res != ( int )nBufferWriteLength ) {
