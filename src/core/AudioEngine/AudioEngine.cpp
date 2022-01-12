@@ -1075,6 +1075,8 @@ void AudioEngine::startAudioDrivers()
 }
 	
 void AudioEngine::setAudioDriver( AudioOutput* pAudioDriver ) {
+
+	std::cout << std::endl << "[AudioEngine::setAudioDriver]" << std::endl;
 	INFOLOG( "" );
 	if ( pAudioDriver == nullptr ) {
 		raiseError( Hydrogen::ERROR_STARTING_DRIVER );
@@ -1082,6 +1084,7 @@ void AudioEngine::setAudioDriver( AudioOutput* pAudioDriver ) {
 
 		// use the NULL output driver
 		pAudioDriver = new NullDriver( audioEngine_process );
+		std::cout << std::endl << "[AudioEngine::setAudioDriver] init 0" << std::endl;
 		pAudioDriver->init( 0 );
 	}
 	
@@ -1107,6 +1110,9 @@ void AudioEngine::setAudioDriver( AudioOutput* pAudioDriver ) {
 	
 	if ( m_pAudioDriver != nullptr &&
 		 m_pAudioDriver->class_name() != DiskWriterDriver::_class_name() ) {
+		std::cout << std::endl << "[AudioEngine::setAudioDriver] connect 0 : " <<
+			m_pAudioDriver->class_name() << " != "
+				  << DiskWriterDriver::_class_name() << std::endl;
 		int res = m_pAudioDriver->connect();
 		if ( res != 0 ) {
 			raiseError( Hydrogen::ERROR_STARTING_DRIVER );
@@ -1119,6 +1125,7 @@ void AudioEngine::setAudioDriver( AudioOutput* pAudioDriver ) {
 			mx.unlock();
 			m_pAudioDriver->init( 0 );
 			m_pAudioDriver->connect();
+			std::cout << std::endl << "[AudioEngine::setAudioDriver] connect 1" << std::endl;
 		}
 
 #ifdef H2CORE_HAVE_JACK
