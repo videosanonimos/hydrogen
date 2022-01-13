@@ -123,11 +123,11 @@ for:
 
           choco install %CHOCO_ARCH% -y openssl --version=1.1.1.1300
 
-          echo c:\%PROGRAM_FILES%
-          dir c:\%PROGRAM_FILES%
+          echo "C:\%PROGRAM_FILES%"
+          dir "C:\%PROGRAM_FILES%"
           
-          echo "c:\%PROGRAM_FILES%\%OPENSSL_DIR%"
-          dir c:\%PROGRAM_FILES%\%OPENSSL_DIR%
+          echo "C:\%PROGRAM_FILES%\%OPENSSL_DIR%"
+          dir "C:\%PROGRAM_FILES%\%OPENSSL_DIR%"
 
           REM *** Install dependencies ***
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libarchive
