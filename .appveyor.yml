@@ -1,15 +1,7 @@
 environment:
   GENERATOR: "MinGW Makefiles"
-  ARTIFACT_BRANCH: master-artifacts
+  ARTIFACT_BRANCH: phil-fix-windows-ssl-support-artifacts
   matrix:
-
-    - job_name: 'Ubuntu 20.04'
-      job_group: 'Linux'
-      appveyor_build_worker_image: Ubuntu2004
-
-    - job_name: 'OS X'
-      job_group: 'Mac OS X'
-      appveyor_build_worker_image: macos
 
     - job_name: 'Windows64'
       job_group: 'Windows'
