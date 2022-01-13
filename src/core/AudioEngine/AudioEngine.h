@@ -308,7 +308,7 @@ public:
 	void			renameJackPorts(std::shared_ptr<Song> pSong);
 	
  
-	void			setAudioDriver( AudioOutput* pAudioDriver, bool bConnect = true );
+	void			setAudioDriver( AudioOutput* pAudioDriver );
 	AudioOutput*	getAudioDriver() const;
 
 	/* retrieve the midi (input) driver */
