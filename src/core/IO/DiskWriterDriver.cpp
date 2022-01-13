@@ -189,6 +189,7 @@ void* diskWriterDriver_thread( void* param )
 		int nFrameNumber = 0;
 		int nLastRun = 0;
 		int nSuccessiveZeros = 0;
+		int nTrueSuccessiveZeros = 0;
 		while ( ( patternPosition < nColumns - 1 && // render all
 													// frames in
 													// pattern 
@@ -242,15 +243,30 @@ void* diskWriterDriver_thread( void* param )
 				for ( int ii = 0; ii < nUsedBuffer; ++ii ) {
 					++nBufferWriteLength;
 					
+					if ( std::abs( pData_L[ii] ) < 1E-9 &&
+						 std::abs( pData_R[ii] ) < 1E-9 ) {
+						++nSuccessiveZeros;
+					} else {
+						nSuccessiveZeros = 0;
+					}
+					
 					if ( std::abs( pData_L[ii] ) == 0 &&
 						 std::abs( pData_R[ii] ) == 0 ) {
-						++nSuccessiveZeros;
+						++nTrueSuccessiveZeros;
+					} else {
+						nTrueSuccessiveZeros = 0;
 					}
 
 					if ( nSuccessiveZeros == nMaxNumberOfSilentFrames ) {
 						break;
 					}
 				}
+
+				std::cout << "nFrameNumber: " << nFrameNumber
+						  << " , nBuferWriteLength: " << nBufferWriteLength
+						  << " , nSuccessiveZeros: " << nSuccessiveZeros
+						  << " , nTrueSuccessiveZeros: " << nTrueSuccessiveZeros
+						  << std::endl;
 			} else {
 				nBufferWriteLength = nUsedBuffer;
 			}
@@ -274,8 +290,6 @@ void* diskWriterDriver_thread( void* param )
 					pData[ ii * 2 + 1 ] = pData_R[ ii ];
 				}
 			}
-
-			std::cout << "wrote: " << nFrameNumber << std::endl;
 			
 			int res = sf_writef_float( m_file, pData, nBufferWriteLength );
 			if ( res != ( int )nBufferWriteLength ) {

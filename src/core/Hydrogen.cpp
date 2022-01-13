@@ -663,10 +663,6 @@ void Hydrogen::startExportSong( const QString& filename)
 void Hydrogen::stopExportSong()
 {
 	AudioEngine* pAudioEngine = m_pAudioEngine;
-	
-	if ( pAudioEngine->getAudioDriver()->class_name() != DiskWriterDriver::_class_name() ) {
-		return;
-	}
 
 	pAudioEngine->getSampler()->stopPlayingNotes();
 	pAudioEngine->getAudioDriver()->disconnect();
