@@ -162,7 +162,7 @@ void* diskWriterDriver_thread( void* param )
 
 	Hydrogen* pHydrogen = Hydrogen::get_instance();
 	auto pSong = pHydrogen->getSong();
-	auto pSampler = pHydrogen->getAudioEngine()->getSampler();
+	auto pSampler = pAudioEngine->getSampler();
 
 	std::vector<PatternList*> *pPatternColumns = pSong->getPatternGroupVector();
 	int nColumns = pPatternColumns->size();
@@ -219,7 +219,6 @@ void* diskWriterDriver_thread( void* param )
 			while( ret != 0 ) {
 				ret = pDriver->m_processCallback( nUsedBuffer, nullptr );
 			}
-
 			if ( patternPosition == nColumns - 1 &&
 				 nPatternLengthInFrames - nFrameNumber < nUsedBuffer ) {
 				// The next buffer at least partially exceeds the song
@@ -253,14 +252,17 @@ void* diskWriterDriver_thread( void* param )
 						break;
 					}
 				}
-
-				std::cout << "nFrameNumber: " << nFrameNumber
-						  << " , nBuferWriteLength: " << nBufferWriteLength
-						  << " , nSuccessiveZeros: " << nSuccessiveZeros
-						  << std::endl;
 			} else {
 				nBufferWriteLength = nUsedBuffer;
 			}
+
+			std::cout << "tick: " << pAudioEngine->getTick()
+					  << ", frame: " << pAudioEngine->getFrames()
+					  << ", nFrameNumber: " << nFrameNumber
+					  << " , [ " << nBufferWriteLength
+					  << " : " << nSuccessiveZeros << "]"
+					  << std::endl;
+
 			
 			nFrameNumber += nBufferWriteLength;
 			
