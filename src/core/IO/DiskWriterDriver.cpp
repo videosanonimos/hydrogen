@@ -106,7 +106,8 @@ void* diskWriterDriver_thread( void* param )
 			  << "Filename: " << pDriver->m_sFilename.toLocal8Bit().data() << std::endl
 			  << "Sample Depth: " << pDriver->m_nSampleDepth << std::endl
 			  << "Bits: " << bits << std::endl
-			  << "SFFormat: " << sfformat << std::endl << std::endl;
+			  << "SFFormat: " << sfformat << std::endl
+			  << std::endl;
 
 	//ogg vorbis option
 	if( pDriver->m_sFilename.endsWith( ".ogg" ) | pDriver->m_sFilename.endsWith( ".OGG" ) ) {
@@ -261,6 +262,8 @@ void* diskWriterDriver_thread( void* param )
 					  << ", nFrameNumber: " << nFrameNumber
 					  << " , [ " << nBufferWriteLength
 					  << " : " << nSuccessiveZeros << "]"
+					  << ", tempo: " << pAudioEngine->getBpm()
+					  << ", tickSize: " << pAudioEngine->getTickSize()
 					  << std::endl;
 
 			
