@@ -121,13 +121,10 @@ for:
           dir "c:\%PROGRAM_FILES%\JACK2"
           dir "c:\%PROGRAM_FILES%\JACK2\lib"
 
-          choco install %CHOCO_ARCH% -y openssl --version=1.1.1.1300
+          choco install %CHOCO_ARCH% -y openssl --version=1.1.1.1300 || cmd /c "exit /b 0"
 
-          echo "C:\%PROGRAM_FILES%"
-          dir "C:\%PROGRAM_FILES%"
-          
-          echo "C:\%PROGRAM_FILES%\%OPENSSL_DIR%"
-          dir "C:\%PROGRAM_FILES%\%OPENSSL_DIR%"
+          echo "C:\%OPENSSL_DIR%"
+          dir "C:\%OPENSSL_DIR%"
 
           REM *** Install dependencies ***
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libarchive
@@ -181,8 +178,8 @@ for:
           REM copy_third_party_libs.py thinks it's a system lib and
           REM won't copy it.
           copy c:\Windows\%LIBJACK% %APPVEYOR_BUILD_FOLDER%\build\windows\extralibs
-          copy c:\%PROGRAM_FILES%\%OPENSSL_DIR%\%LIBSSL% %APPVEYOR_BUILD_FOLDER%\build\windows\extralibs
-          copy c:\%PROGRAM_FILES%\%OPENSSL_DIR%\%LIBCRYPTO% %APPVEYOR_BUILD_FOLDER%\build\windows\extralibs
+          copy c:\%OPENSSL_DIR%\%LIBSSL% %APPVEYOR_BUILD_FOLDER%\build\windows\extralibs
+          copy c:\%OPENSSL_DIR%\%LIBCRYPTO% %APPVEYOR_BUILD_FOLDER%\build\windows\extralibs
           
           REM *** Build installer ***
           cpack -G NSIS -v
