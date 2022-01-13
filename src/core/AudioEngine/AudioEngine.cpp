@@ -536,6 +536,9 @@ void AudioEngine::updateBpmAndTickSize( bool bRunInPreparedState ) {
 	
 	float fNewBpm = getBpmAtColumn( pHydrogen->getAudioEngine()->getColumn() );
 	if ( fNewBpm != getBpm() ) {
+
+		std::cout << "[AudioEngine::updateBpmAndTickSize] update Bpm "
+				  << getBpm() << " => " << fNewBpm << std::endl;
 		setBpm( fNewBpm );
 		EventQueue::get_instance()->push_event( EVENT_TEMPO_CHANGED, 0 );
 	}
@@ -559,6 +562,8 @@ void AudioEngine::updateBpmAndTickSize( bool bRunInPreparedState ) {
 				  .arg( fOldTickSize, 0, 'f' ).arg( fNewTickSize, 0, 'f' ) );
 		return;
 	}
+	std::cout << "[AudioEngine::updateBpmAndTickSize] update tick size "
+			  << getTickSize() << " => " << fNewTickSize << std::endl;
 	
 	setTickSize( fNewTickSize ); 
 
@@ -1654,6 +1659,7 @@ void AudioEngine::setSong( std::shared_ptr<Song> pNewSong )
 
 	std::cout << "[updateSongSize] fNewSongSizeInTicks: " << m_fSongSizeInTicks
 			  << " , in frames: " << m_fSongSizeInTicks * getTickSize()
+			  << " , song bpm: " << pNewSong->getBpm()
 			  << std::endl;
 
 	// change the current audio engine state

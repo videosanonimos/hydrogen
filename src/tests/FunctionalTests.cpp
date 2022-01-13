@@ -269,6 +269,7 @@ private:
 		}
 	
 		pHydrogen->setSong( pSong );
+		// pHydrogen->getAudioEngine()->updateBpmAndTickSize( true );
 
 		InstrumentList *pInstrumentList = pSong->getInstrumentList();
 		for (auto i = 0; i < pInstrumentList->size(); i++) {
