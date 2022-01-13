@@ -1470,6 +1470,20 @@ int AudioEngine::audioEngine_process( uint32_t nframes, void* /*arg*/ )
 	int nResNoteQueue = pAudioEngine->updateNoteQueue( nframes );
 	if ( nResNoteQueue == -1 ) {	// end of song
 		___INFOLOG( "End of song received" );
+
+		double fTickStart, fTickEnd;
+		long long nLeadLagFactor = pAudioEngine->computeTickInterval( &fTickStart, &fTickEnd, nframes );
+
+		std::cout << "[audioEngine_process] end of song reached at tick: "
+				  << pAudioEngine->getTick() << " , frame: "
+				  << pAudioEngine->getFrames() << " , with lookahead: "
+				  << nLeadLagFactor + AudioEngine::nMaxTimeHumanize + 1
+				  << std::endl
+				  << "song size in ticks: " << pAudioEngine->m_fSongSizeInTicks
+				  << " , in frames: " << pAudioEngine->m_fSongSizeInTicks * pAudioEngine->getTickSize()
+				  << " : current: " << pAudioEngine->getFrames() + nLeadLagFactor + AudioEngine::nMaxTimeHumanize + 1
+				  << std::endl;
+		
 		pAudioEngine->stop();
 		pAudioEngine->stopPlayback();
 		pAudioEngine->reset();
@@ -1637,6 +1651,10 @@ void AudioEngine::setSong( std::shared_ptr<Song> pNewSong )
 	Hydrogen::get_instance()->renameJackPorts( pNewSong );
 #endif
 	m_fSongSizeInTicks = static_cast<float>( pNewSong->lengthInTicks() );
+
+	std::cout << "[updateSongSize] fNewSongSizeInTicks: " << m_fSongSizeInTicks
+			  << " , in frames: " << m_fSongSizeInTicks * getTickSize()
+			  << std::endl;
 
 	// change the current audio engine state
 	setState( State::Ready );

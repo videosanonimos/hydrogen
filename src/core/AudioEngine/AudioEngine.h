@@ -497,6 +497,9 @@ public:
 	/** Is allowed to set m_nextState via setNextState() according to
 		what the JACK server reports and to call locateToFrame().*/
 	friend void JackAudioDriver::updateTransportInfo();
+
+	/** Set to the total number of ticks in a Song.*/
+	double				m_fSongSizeInTicks;
 private:
 
 	double getDoubleTick() const;
@@ -707,9 +710,6 @@ private:
 	 * A value of -1 corresponds to "pattern list could not be found".
 	 */
 	int					m_nColumn;
-
-	/** Set to the total number of ticks in a Song.*/
-	double				m_fSongSizeInTicks;
 
 		/**
 	 * Patterns to be played next in Song::PATTERN_MODE.
