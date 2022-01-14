@@ -1639,6 +1639,8 @@ int AudioEngine::audioEngine_process( uint32_t nframes, void* /*arg*/ )
 void AudioEngine::setSong( std::shared_ptr<Song> pNewSong )
 {
 	___WARNINGLOG( QString( "Set song: %1" ).arg( pNewSong->getName() ) );
+
+	auto pHydrogen = Hydrogen::get_instance();
 	
 	this->lock( RIGHT_HERE );
 
@@ -1660,7 +1662,7 @@ void AudioEngine::setSong( std::shared_ptr<Song> pNewSong )
 	}
 
 #ifdef H2CORE_HAVE_JACK
-	Hydrogen::get_instance()->renameJackPorts( pNewSong );
+	pHydrogen->renameJackPorts( pNewSong );
 #endif
 	m_fSongSizeInTicks = static_cast<float>( pNewSong->lengthInTicks() );
 
@@ -1668,7 +1670,7 @@ void AudioEngine::setSong( std::shared_ptr<Song> pNewSong )
 			  << " , in frames: " << m_fSongSizeInTicks * getTickSize()
 			  << " , song bpm: " << pNewSong->getBpm()
 			  << " , current bpm: " << getBpm()
-			  << " , timeline activated: " << Hydrogen::get_instance()->isTimelineEnabled()
+			  << " , timeline activated: " << pHydrogen->isTimelineEnabled()
 			  << std::endl;
 
 	// change the current audio engine state
@@ -1676,6 +1678,18 @@ void AudioEngine::setSong( std::shared_ptr<Song> pNewSong )
 
 	setNextBpm( pNewSong->getBpm() );
 	locate( 0 );
+
+	// Update Timeline
+	
+	Timeline* pOldTimeline = pHydrogen->getTimeline();
+
+	std::cout << "[setSong] old timeline: " << pOldTimeline->toQString("",true).toLocal8Bit().data() << std::endl;
+	std::cout << "[setSong] new timeline: " << pNewSong->getLoadedTimeline()->toQString("",true).toLocal8Bit().data() << std::endl;
+	
+	if ( pOldTimeline != nullptr ) {
+		delete pOldTimeline;
+	}
+	pHydrogen->setTimeline( pNewSong->getLoadedTimeline() );
 
 	this->unlock();
 

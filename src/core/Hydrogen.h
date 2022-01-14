@@ -454,6 +454,7 @@ void			previewSample( Sample *pSample );
 
 	void			__panic();
 	Timeline*		getTimeline() const;
+	void            setTimeline( Timeline* pTimeline );
 	
 	//export management
 	bool			getIsExportSessionActive() const;
@@ -682,6 +683,10 @@ private:
 inline Timeline* Hydrogen::getTimeline() const
 {
 	return m_pTimeline;
+}
+inline void Hydrogen::setTimeline( Timeline* pTimeline )
+{
+	m_pTimeline = pTimeline;
 }
 
 inline CoreActionController* Hydrogen::getCoreActionController() const

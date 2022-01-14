@@ -154,6 +154,8 @@ public:
 		auto outFile = Filesystem::tmp_file_path("test.wav");
 		auto refFile = H2TEST_FILE("functional/test.ref.flac");
 
+		Hydrogen::get_instance()->getCoreActionController()->activateTimeline( false );
+
 		exportSong( songFile, outFile );
 		H2TEST_ASSERT_AUDIO_FILES_EQUAL( refFile, outFile );
 		Filesystem::rm( outFile );

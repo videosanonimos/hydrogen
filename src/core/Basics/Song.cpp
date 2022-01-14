@@ -1477,8 +1477,7 @@ std::shared_ptr<Song> SongReader::readSong( const QString& sFileName )
 		WARNINGLOG( "ladspa node not found" );
 	}
 
-	Timeline* pTimeline = Hydrogen::get_instance()->getTimeline();
-	pTimeline->deleteAllTempoMarkers();
+	Timeline* pTimeline = new Timeline();
 	QDomNode bpmTimeLine = songNode.firstChildElement( "BPMTimeLine" );
 	if ( !bpmTimeLine.isNull() ) {
 		QDomNode newBPMNode = bpmTimeLine.firstChildElement( "newBPM" );
@@ -1490,8 +1489,6 @@ std::shared_ptr<Song> SongReader::readSong( const QString& sFileName )
 	} else {
 		WARNINGLOG( "bpmTimeLine node not found" );
 	}
-
-	pTimeline->deleteAllTags();
 	QDomNode timeLineTag = songNode.firstChildElement( "timeLineTag" );
 	if ( !timeLineTag.isNull() ) {
 		QDomNode newTAGNode = timeLineTag.firstChildElement( "newTAG" );
@@ -1503,6 +1500,7 @@ std::shared_ptr<Song> SongReader::readSong( const QString& sFileName )
 	} else {
 		WARNINGLOG( "TagTimeLine node not found" );
 	}
+	pSong->setLoadedTimeline( pTimeline );
 
 	// Automation Paths
 	QDomNode automationPathsNode = songNode.firstChildElement( "automationPaths" );
