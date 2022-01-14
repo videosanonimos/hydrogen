@@ -525,19 +525,21 @@ void AudioEngine::updateTransportPosition( double fTick, bool bUseLoopMode ) {
 }
 
 void AudioEngine::updateBpmAndTickSize( bool bRunInPreparedState ) {
-	std::cout << "[AudioEngine::updateBpmAndTickSize]" ;
 	if ( bRunInPreparedState && m_state == State::Prepared ) {
 		// keep running when directly called during testings
 	} else if ( m_state != State::Playing && m_state != State::Ready ) {
-		std::cout << "not running" << std::endl;
 		return;
 	}
-	std::cout << "is running" << std::endl;
 
 	auto pHydrogen = Hydrogen::get_instance();
 	auto pSong = pHydrogen->getSong();
 	
 	float fNewBpm = getBpmAtColumn( pHydrogen->getAudioEngine()->getColumn() );
+
+	std::cout << "[[AudioEngine::updateBpmAndTickSize] " << fNewBpm
+			  << " , timeline activated: " << Hydrogen::get_instance()->isTimelineEnabled()
+			  << std::endl;
+	
 	if ( fNewBpm != getBpm() ) {
 
 		std::cout << "[AudioEngine::updateBpmAndTickSize] update Bpm "
@@ -1190,14 +1192,16 @@ float AudioEngine::getBpmAtColumn( int nColumn ) {
 		float fJackMasterBpm = pHydrogen->getMasterBpm();
 		if ( ! std::isnan( fJackMasterBpm ) && fBpm != fJackMasterBpm ) {
 			fBpm = fJackMasterBpm;
-			// DEBUGLOG( QString( "Tempo update by the JACK server [%1]").arg( fJackMasterBpm ) );
+			std::cout << QString( "Tempo update by the JACK server [%1]")
+				.arg( fJackMasterBpm ).toLocal8Bit().data() << std::endl;
 		}
 	} else if ( Preferences::get_instance()->getUseTimelineBpm() &&
 				pHydrogen->getMode() == Song::Mode::Song ) {
 
 		float fTimelineBpm = pHydrogen->getTimeline()->getTempoAtColumn( nColumn );
 		if ( fTimelineBpm != fBpm ) {
-			// DEBUGLOG( QString( "Set tempo to timeline value [%1]").arg( fTimelineBpm ) );
+			std::cout << QString( "Set tempo to timeline value [%1]")
+			.arg( fTimelineBpm ).toLocal8Bit().data() << std::endl;
 			fBpm = fTimelineBpm;
 		}
 
@@ -1205,8 +1209,8 @@ float AudioEngine::getBpmAtColumn( int nColumn ) {
 		// Change in speed due to user interaction with the BPM widget
 		// or corresponding MIDI or OSC events.
 		if ( pAudioEngine->getNextBpm() != fBpm ) {
-			// DEBUGLOG( QString( "BPM changed via Widget, OSC, or MIDI from [%1] to [%2]." )
-			// 		  .arg( fBpm ).arg( pAudioEngine->getNextBpm() ) );
+			std::cout << QString( "BPM changed via Widget, OSC, or MIDI from [%1] to [%2]." )
+				.arg( fBpm ).arg( pAudioEngine->getNextBpm() ).toLocal8Bit().data() << std::endl;
 			fBpm = pAudioEngine->getNextBpm();
 		}
 	}
@@ -1660,9 +1664,11 @@ void AudioEngine::setSong( std::shared_ptr<Song> pNewSong )
 #endif
 	m_fSongSizeInTicks = static_cast<float>( pNewSong->lengthInTicks() );
 
-	std::cout << "[updateSongSize] fNewSongSizeInTicks: " << m_fSongSizeInTicks
+	std::cout << "[setSong] fNewSongSizeInTicks: " << m_fSongSizeInTicks
 			  << " , in frames: " << m_fSongSizeInTicks * getTickSize()
 			  << " , song bpm: " << pNewSong->getBpm()
+			  << " , current bpm: " << getBpm()
+			  << " , timeline activated: " << Hydrogen::get_instance()->isTimelineEnabled()
 			  << std::endl;
 
 	// change the current audio engine state
