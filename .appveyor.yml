@@ -207,15 +207,19 @@ for:
           dir "c:\%PROGRAM_FILES%\JACK2"
           dir "c:\%PROGRAM_FILES%\JACK2\lib"
 
+          REM *** Updating packages
+          c:\msys64\usr\bin\pacman --noconfirm -Syu || cmd /c "exit  /b 0"
+
           REM *** Install dependencies ***
-          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libarchive
-          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libsndfile
-          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-cppunit
-          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-portaudio
-          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-portmidi
-          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libwinpthread-git
-          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-qt5
-          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ladspa-sdk
+          c:\msys64\usr\bin\pacman --noconfirm -S -s libarchive || cmd /c "exit  /b 0"
+          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libarchive || cmd /c "exit  /b 0"
+          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libsndfile || cmd /c "exit  /b 0"
+          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-cppunit || cmd /c "exit  /b 0"
+          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-portaudio || cmd /c "exit  /b 0"
+          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-portmidi || cmd /c "exit  /b 0"
+          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libwinpthread-git || cmd /c "exit  /b 0"
+          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-qt5 || cmd /c "exit  /b 0"
+          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ladspa-sdk || cmd /c "exit  /b 0"
 
           REM *** INIT SUBMODULES ***
           git submodule init
