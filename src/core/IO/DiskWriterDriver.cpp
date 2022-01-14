@@ -264,6 +264,7 @@ void* diskWriterDriver_thread( void* param )
 					  << " : " << nSuccessiveZeros << "]"
 					  << ", tempo: " << pAudioEngine->getBpm()
 					  << ", tickSize: " << pAudioEngine->getTickSize()
+					  << ", state: " << static_cast<int>(pAudioEngine->getState())
 					  << std::endl;
 
 			

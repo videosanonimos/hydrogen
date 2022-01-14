@@ -525,12 +525,14 @@ void AudioEngine::updateTransportPosition( double fTick, bool bUseLoopMode ) {
 }
 
 void AudioEngine::updateBpmAndTickSize( bool bRunInPreparedState ) {
-	std::cout << "[AudioEngine::updateBpmAndTickSize]"<< std::endl;
+	std::cout << "[AudioEngine::updateBpmAndTickSize]" ;
 	if ( bRunInPreparedState && m_state == State::Prepared ) {
 		// keep running when directly called during testings
 	} else if ( m_state != State::Playing && m_state != State::Ready ) {
+		std::cout << "not running" << std::endl;
 		return;
 	}
+	std::cout << "is running" << std::endl;
 
 	auto pHydrogen = Hydrogen::get_instance();
 	auto pSong = pHydrogen->getSong();
