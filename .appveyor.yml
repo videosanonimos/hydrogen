@@ -208,6 +208,7 @@ for:
           dir "c:\%PROGRAM_FILES%\JACK2\lib"
 
           REM *** Updating packages
+          RD \S c:\msys64\var\lib\pacman\sync || cmd /c "exit  /b 0"
           c:\msys64\usr\bin\pacman --noconfirm -Syu || cmd /c "exit  /b 0"
 
           REM *** Install dependencies ***
