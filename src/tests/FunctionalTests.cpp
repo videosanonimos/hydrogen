@@ -152,12 +152,17 @@ public:
 	{
 		std::cout << "[testExportAudio]" << std::endl;
 		auto songFile = H2TEST_FILE("functional/test.h2song");
+		std::cout << "[testExportAudio] 1" << std::endl;
 		auto outFile = Filesystem::tmp_file_path("test.wav");
+		std::cout << "[testExportAudio] 2" << std::endl;
 		auto refFile = H2TEST_FILE("functional/test.ref.flac");
+		std::cout << "[testExportAudio] 3" << std::endl;
 
 		Hydrogen::get_instance()->getCoreActionController()->activateTimeline( false );
+		std::cout << "[testExportAudio] 4" << std::endl;
 
 		exportSong( songFile, outFile );
+		std::cout << "[testExportAudio] 5" << std::endl;
 		H2TEST_ASSERT_AUDIO_FILES_EQUAL( refFile, outFile );
 		Filesystem::rm( outFile );
 		std::cout << "[testExportAudio] done" << std::endl;
