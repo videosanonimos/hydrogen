@@ -1532,6 +1532,10 @@ void Hydrogen::setIsTimelineActivated( bool bEnabled ) {
 	std::cout << "[Hydrogen::setIsTimelineActivated]" << std::endl;
 	auto pPref = Preferences::get_instance();
 
+	if ( getSong() == nullptr ) {
+		std::cout << "[Hydrogen::setIsTimelineActivated] no song set yet" << std::endl;
+	}
+
 	if ( bEnabled != getSong()->getIsTimelineActivated() ) {
 		std::cout << "[Hydrogen::setIsTimelineActivated] 1" << std::endl;
 		pPref->setUseTimelineBpm( bEnabled );
