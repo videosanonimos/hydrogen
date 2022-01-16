@@ -1681,15 +1681,20 @@ void AudioEngine::setSong( std::shared_ptr<Song> pNewSong )
 
 	// Update Timeline
 	
-	Timeline* pOldTimeline = pHydrogen->getTimeline();
+	auto pOldTimeline = pHydrogen->getTimeline();
 
-	std::cout << "[setSong] old timeline: " << pOldTimeline->toQString("",true).toLocal8Bit().data() << std::endl;
-	std::cout << "[setSong] new timeline: " << pNewSong->getLoadedTimeline()->toQString("",true).toLocal8Bit().data() << std::endl;
-	
 	if ( pOldTimeline != nullptr ) {
-		delete pOldTimeline;
+		std::cout << "[setSong] old timeline: " << pOldTimeline->toQString("",true).toLocal8Bit().data() << std::endl;
+	} else {
+		std::cout << "[setSong] old timeline: nullptr" << std::endl;
 	}
-	pHydrogen->setTimeline( pNewSong->getLoadedTimeline() );
+	if ( pNewSong->getTimeline() != nullptr ) {
+		std::cout << "[setSong] new timeline: " << pNewSong->getTimeline()->toQString("",true).toLocal8Bit().data() << std::endl;
+	} else {
+		std::cout << "[setSong] new timeline: nullptr" << std::endl;
+	}
+	
+	pHydrogen->setTimeline( pNewSong->getTimeline() );
 
 	Hydrogen::get_instance()->setTimeline( pNewSong->getTimeline() );
 

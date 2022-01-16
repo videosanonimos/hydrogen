@@ -73,27 +73,6 @@ class SongReader : public H2Core::Object<SongReader>
 
 /**
 \ingroup H2CORE
-\brief	Read XML file of a song
-*/
-/** \ingroup docCore*/
-class SongReader : public H2Core::Object<SongReader>
-{
-		H2_OBJECT(SongReader)
-	public:
-		SongReader();
-		~SongReader();
-		const QString getPath( const QString& filename ) const;
-		std::shared_ptr<Song> readSong( const QString& filename );
-
-	private:
-		QString m_sSongVersion;
-
-		/// Dato un XmlNode restituisce un oggetto Pattern
-		Pattern* getPattern( QDomNode pattern, InstrumentList* instrList );
-};
-
-/**
-\ingroup H2CORE
 \brief	Song class
 */
 /** \ingroup docCore docDataStructure */
@@ -370,14 +349,6 @@ class Song : public H2Core::Object<Song>, public std::enable_shared_from_this<So
 		int m_nPanLawType;
 		// k such that L^k+R^k = 1. Used in constant k-Norm pan law
 		float m_fPanLawKNorm;
-
-	void setLoadedTimeline( Timeline* pTimeline );
-
-	/** #Timeline loaded while reading the .h2song file. It sill be
-         set along the #Song itself in Hydrogen::getSong()*/ 
-	Timeline* m_pLoadedTimeline;
-
-};
 
 	void setTimeline( std::shared_ptr<Timeline> pTimeline );
 	std::shared_ptr<Timeline> m_pTimeline;
