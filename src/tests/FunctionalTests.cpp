@@ -158,6 +158,10 @@ public:
 		auto refFile = H2TEST_FILE("functional/test.ref.flac");
 		std::cout << "[testExportAudio] 3" << std::endl;
 
+		if ( Hydrogen::get_instance()->getCoreActionController() == nullptr ) {
+			std::cout << "[testExportAudio] no CAC" << std::endl;
+		}
+
 		Hydrogen::get_instance()->getCoreActionController()->activateTimeline( false );
 		std::cout << "[testExportAudio] 4" << std::endl;
 

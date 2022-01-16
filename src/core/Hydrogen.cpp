@@ -1529,22 +1529,30 @@ void Hydrogen::setMode( Song::Mode mode ) {
 }
 
 void Hydrogen::setIsTimelineActivated( bool bEnabled ) {
+	std::cout << "[Hydrogen::setIsTimelineActivated]" << std::endl;
 	auto pPref = Preferences::get_instance();
 
 	if ( bEnabled != getSong()->getIsTimelineActivated() ) {
+		std::cout << "[Hydrogen::setIsTimelineActivated] 1" << std::endl;
 		pPref->setUseTimelineBpm( bEnabled );
+		std::cout << "[Hydrogen::setIsTimelineActivated] 1.1" << std::endl;
 		getSong()->setIsTimelineActivated( bEnabled );
+		std::cout << "[Hydrogen::setIsTimelineActivated] 1.2" << std::endl;
 
 		getAudioEngine()->handleTimelineChange();
+		std::cout << "[Hydrogen::setIsTimelineActivated] 1.3" << std::endl;
 
 		if ( bEnabled ) {
 			getTimeline()->activate();
+			std::cout << "[Hydrogen::setIsTimelineActivated] 1.3.1" << std::endl;
 		} else {
 			getTimeline()->deactivate();
+			std::cout << "[Hydrogen::setIsTimelineActivated] 1.3.2" << std::endl;
 		}
 
 		EventQueue::get_instance()->push_event( EVENT_TIMELINE_ACTIVATION, static_cast<int>( bEnabled ) );
 	}
+	std::cout << "[Hydrogen::setIsTimelineActivated] done" << std::endl;
 }
 
 int Hydrogen::getColumnForTick( long nTick, bool bLoopMode, long* pPatternStartTick ) const
