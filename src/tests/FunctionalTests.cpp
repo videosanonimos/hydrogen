@@ -149,7 +149,8 @@ public:
 	}
 
 	void testExportAudio()
-	{		   	
+	{
+		std::cout << "[testExportAudio]" << std::endl;
 		auto songFile = H2TEST_FILE("functional/test.h2song");
 		auto outFile = Filesystem::tmp_file_path("test.wav");
 		auto refFile = H2TEST_FILE("functional/test.ref.flac");
@@ -159,6 +160,7 @@ public:
 		exportSong( songFile, outFile );
 		H2TEST_ASSERT_AUDIO_FILES_EQUAL( refFile, outFile );
 		Filesystem::rm( outFile );
+		std::cout << "[testExportAudio] done" << std::endl;
 	}
 
 	void testExportMIDISMF1Single()
@@ -211,6 +213,7 @@ public:
 */
 	void testExportVelocityAutomationAudio()
 	{
+		std::cout << "[testExportVelocityAutomationAudio]" << std::endl;
 		auto songFile = H2TEST_FILE("functional/velocityautomation.h2song");
 		auto outFile = Filesystem::tmp_file_path("velocityautomation.wav");
 		auto refFile = H2TEST_FILE("functional/velocityautomation.ref.flac");
@@ -218,6 +221,7 @@ public:
 		exportSong( songFile, outFile );
 		H2TEST_ASSERT_AUDIO_FILES_EQUAL( refFile, outFile );
 		Filesystem::rm( outFile );
+		std::cout << "[testExportVelocityAutomationAudio] done" << std::endl;
 	}
 
 	void testExportVelocityAutomationMIDISMF1()

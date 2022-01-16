@@ -46,6 +46,14 @@ environment:
   ARTIFACT_BRANCH: phil-fix-865-artifacts
   matrix:
 
+    - job_name: 'Ubuntu 20.04'
+      job_group: 'Linux'
+      appveyor_build_worker_image: Ubuntu2004
+
+    - job_name: 'OS X'
+      job_group: 'Mac OS X'
+      appveyor_build_worker_image: macos
+
     - job_name: 'Windows64'
       job_group: 'Windows'
       MSYS: 'C:\msys64\mingw64'
@@ -303,7 +311,7 @@ for:
           SET CORE_PATH=%cd%\src\core
           echo %CORE_PATH%
           set PATH=%CORE_PATH%;%PATH%
-          src\tests\tests.exe --appveyor || cmd /c "exit /b 0"
+          src\tests\tests.exe --appveyor
           7z a %APPVEYOR_BUILD_FOLDER%\testresults.zip %TEMP%\hydrogen || cmd /c "exit  /b 0"
           if %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\testresults.zip
 
