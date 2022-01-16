@@ -48,6 +48,28 @@ class Song;
 class DrumkitComponent;
 class PatternList;
 class AutomationPath;
+class Timeline;
+
+/**
+\ingroup H2CORE
+\brief	Read XML file of a song
+*/
+/** \ingroup docCore*/
+class SongReader : public H2Core::Object<SongReader>
+{
+		H2_OBJECT(SongReader)
+	public:
+		SongReader();
+		~SongReader();
+		const QString getPath( const QString& filename ) const;
+		std::shared_ptr<Song> readSong( const QString& filename );
+
+	private:
+		QString m_sSongVersion;
+
+		/// Dato un XmlNode restituisce un oggetto Pattern
+		Pattern* getPattern( QDomNode pattern, InstrumentList* instrList );
+};
 
 /**
 \ingroup H2CORE
@@ -100,6 +122,9 @@ class Song : public H2Core::Object<Song>, public std::enable_shared_from_this<So
 
 		static std::shared_ptr<Song> getEmptySong();
 		static std::shared_ptr<Song> getDefaultSong();
+
+	bool getIsTimelineActivated() const;
+	void setIsTimelineActivated( bool bIsTimelineActivated );
 
 		bool getIsMuted() const;
 		void setIsMuted( bool bIsMuted );
@@ -243,6 +268,8 @@ class Song : public H2Core::Object<Song>, public std::enable_shared_from_this<So
 		float getPanLawKNorm() const;
 
 		bool isPatternActive( int nColumn, int nRow ) const;
+
+	std::shared_ptr<Timeline> getTimeline() const;
 	
 	Timeline* getLoadedTimeline() const;	
 		/** Formatted string version for debugging purposes.
@@ -254,10 +281,12 @@ class Song : public H2Core::Object<Song>, public std::enable_shared_from_this<So
 		 *
 		 * \return String presentation of current object.*/
 		QString toQString( const QString& sPrefix, bool bShort = true ) const override;
-
 	friend std::shared_ptr<Song> SongReader::readSong( const QString& filename );
-
 	private:
+
+	/** Whether the Timeline button was pressed in the GUI or it was
+		activated via an OSC command. */
+	bool m_bIsTimelineActivated;
 							
 		bool m_bIsMuted;
 		///< Resolution of the song (number of ticks per quarter)
@@ -350,11 +379,22 @@ class Song : public H2Core::Object<Song>, public std::enable_shared_from_this<So
 
 };
 
-inline Timeline* Song::getLoadedTimeline() const {
-	return m_pLoadedTimeline;
+	void setTimeline( std::shared_ptr<Timeline> pTimeline );
+	std::shared_ptr<Timeline> m_pTimeline;
+
+};
+
+inline bool Song::getIsTimelineActivated() const {
+	return m_bIsTimelineActivated;
 }
-inline void Song::setLoadedTimeline( Timeline* pTimeline ) {
-	m_pLoadedTimeline = pTimeline;
+inline void Song::setIsTimelineActivated( bool bIsTimelineActivated ) {
+	m_bIsTimelineActivated = bIsTimelineActivated;
+}
+inline std::shared_ptr<Timeline> Song::getTimeline() const {
+	return m_pTimeline;
+}
+inline void Song::setTimeline( std::shared_ptr<Timeline> pTimeline ) {
+	m_pTimeline = pTimeline;
 }
 
 inline bool Song::getIsMuted() const
