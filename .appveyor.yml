@@ -222,9 +222,9 @@ for:
 
           C:\msys64\usr\bin\bash -lc "pacman --version"
 
-          C:\msys64\usr\bin\bash -lc "pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig"
+          C:\msys64\usr\bin\bash -lc "pacman-key --verify %cd%\msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig"
           
-          C:\msys64\usr\bin\bash -lc "pacman -U --config <(echo) msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz"
+          C:\msys64\usr\bin\bash -lc "pacman -U --config <(echo) %cd%\msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz"
 
           rmdir /Q /S c:\msys64\etc\pacman.d\gnupg || cmd /c "exit  /b 0"
           C:\msys64\usr\bin\bash -lc "pacman-key --init"
