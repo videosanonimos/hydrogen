@@ -195,11 +195,12 @@ for:
      - ls /
      - ls /c
      - ls /usr/bin
-     - /usr/bin/pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
-     - /usr/bin/pacman -U --config <(echo) msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz
+     - ls /mingw64/usr/bin
+     - /mingw64/usr/bin/pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
+     - /mingw64/usr/bin/pacman -U --config <(echo) msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz
      - rm -r /etc/pacman.d/gnupg/
-     - /usr/bin/pacman-key --init
-     - /usr/bin/pacman-key --populate msys2
+     - /mingw64/usr/bin/pacman-key --init
+     - /mingw64/usr/bin/pacman-key --populate msys2
      - cmd: |
 
           if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
