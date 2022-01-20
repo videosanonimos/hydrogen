@@ -221,8 +221,9 @@ for:
           curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig || cmd /c "exit  /b 0"
 
           C:\msys64\usr\bin\bash -lc "pacman --version"
+          C:\msys64\usr\bin\bash -lc "ls /"
 
-          C:\msys64\usr\bin\bash -lc "pacman-key --verify %cd%\msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig"
+          C:\msys64\usr\bin\bash -lc "pacman-key --verify /c/projects/hydrogen/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig"
           
           C:\msys64\usr\bin\bash -lc "pacman -U --config <(echo) %cd%\msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz"
 
