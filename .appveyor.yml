@@ -188,18 +188,16 @@ for:
       only:
         - job_group: 'Windows'
 
-    before_build: |-
-         pwd 
-         curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz
-         curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
-
-         pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
-         pacman -U --config <(echo) msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz
-         rm -r /etc/pacman.d/gnupg/
-         pacman-key --init
-         pacman-key --populate msys2
-         
-      cmd: |-
+    before_build:
+     - pwd 
+     - curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz
+     - curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
+     - pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
+     - pacman -U --config <(echo) msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz
+     - rm -r /etc/pacman.d/gnupg/
+     - pacman-key --init
+     - pacman-key --populate msys2
+     - cmd: |
 
           if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
 
