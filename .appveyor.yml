@@ -226,19 +226,20 @@ for:
           C:\msys64\usr\bin\bash -lc "pacman-key --verify /c/projects/hydrogen/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig"
           
           C:\msys64\usr\bin\bash -lc "pacman --noconfirm -U /c/projects/hydrogen/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz"
-          c:\msys64\usr\bin\pacman --noconfirm -U "http://repo.msys2.org/msys/x86_64/libzstd-1.4.4-2-x86_64.pkg.tar.xz" || cmd /c "exit  /b 0"
-          c:\msys64\usr\bin\pacman --noconfirm -U "http://repo.msys2.org/msys/x86_64/zstd-1.4.4-2-x86_64.pkg.tar.xz" || cmd /c "exit  /b 0"
-          c:\msys64\usr\bin\pacman --noconfirm -U "http://repo.msys2.org/msys/x86_64/pacman-5.2.1-6-x86_64.pkg.tar.xz" || cmd /c "exit  /b 0"
 
           rmdir /Q /S c:\msys64\etc\pacman.d\gnupg || cmd /c "exit  /b 0"
           C:\msys64\usr\bin\bash -lc "pacman-key --init"
           C:\msys64\usr\bin\bash -lc "pacman-key --populate mingw32" || cmd /c "exit  /b 0"
           C:\msys64\usr\bin\bash -lc "pacman-key --populate mingw64" || cmd /c "exit  /b 0"
           C:\msys64\usr\bin\bash -lc "pacman-key --populate msys2" || cmd /c "exit  /b 0"
+          c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -Sydd pacman || cmd /c "exit  /b 0"
+
+          
+          c:\msys64\usr\bin\pacman --noconfirm -U "http://repo.msys2.org/msys/x86_64/libzstd-1.4.4-2-x86_64.pkg.tar.xz" || cmd /c "exit  /b 0"
+          c:\msys64\usr\bin\pacman --noconfirm -U "http://repo.msys2.org/msys/x86_64/zstd-1.4.4-2-x86_64.pkg.tar.xz" || cmd /c "exit  /b 0"
+          c:\msys64\usr\bin\pacman --noconfirm -U "http://repo.msys2.org/msys/x86_64/pacman-5.2.1-6-x86_64.pkg.tar.xz" || cmd /c "exit  /b 0"
 
           rmdir /Q /S c:\msys64\var\lib\pacman\sync || cmd /c "exit  /b 0"
-          c:\msys64\usr\bin\pacman --noconfirm -Sy pacman || cmd /c "exit  /b 0"
-          c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -Syuu || cmd /c "exit  /b 0"
           
 
           REM *** Install dependencies ***
