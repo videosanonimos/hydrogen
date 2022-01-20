@@ -192,6 +192,9 @@ for:
      - pwd 
      - curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz
      - curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
+     - ls /
+     - ls /c
+     - ls /c/usr/bin
      - pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
      - pacman -U --config <(echo) msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz
      - rm -r /etc/pacman.d/gnupg/
