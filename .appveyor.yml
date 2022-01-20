@@ -194,12 +194,12 @@ for:
      - curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
      - ls /
      - ls /c
-     - ls /c/usr/bin
-     - pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
-     - pacman -U --config <(echo) msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz
+     - ls /usr/bin
+     - /usr/bin/pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
+     - /usr/bin/pacman -U --config <(echo) msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz
      - rm -r /etc/pacman.d/gnupg/
-     - pacman-key --init
-     - pacman-key --populate msys2
+     - /usr/bin/pacman-key --init
+     - /usr/bin/pacman-key --populate msys2
      - cmd: |
 
           if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
