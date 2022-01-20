@@ -189,21 +189,7 @@ for:
         - job_group: 'Windows'
 
     before_build:
-     - pwd 
-     - curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz
-     - curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
-     - find / -name "*pacman*"
-     - ls /
-     - ls /c
-     - ls /usr/bin
-     - ls /mingw64/
-     - ls /mingw64/bin
-     - /mingw64/bin/pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig
-     - /mingw64/bin/pacman -U --config <(echo) msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz
-     - rm -r /etc/pacman.d/gnupg/
-     - /mingw64/bin/pacman-key --init
-     - /mingw64/bin/pacman-key --populate msys2
-     - cmd: |
+      cmd: |-
 
           if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
 
@@ -230,6 +216,19 @@ for:
           dir "c:\msys64\etc" || cmd /c "exit  /b 0"
           dir "c:\msys64\etc\pacman.d" || cmd /c "exit  /b 0"
           dir "c:\msys64\etc\pacman.d\gnupg" || cmd /c "exit  /b 0"
+
+          curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz || cmd /c "exit  /b 0"
+          curl -O https://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig || cmd /c "exit  /b 0"
+
+          C:\msys64\usr\bin\bash -lc "pacman --version"
+
+          C:\msys64\usr\bin\bash -lc "pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig"
+          
+          C:\msys64\usr\bin\bash -lc "pacman -U --config <(echo) msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz"
+
+          rmdir /Q /S c:\msys64\etc\pacman.d\gnupg || cmd /c "exit  /b 0"
+          C:\msys64\usr\bin\bash -lc "pacman-key --init"
+          C:\msys64\usr\bin\bash -lc "pacman-key --populate msys2"
 
           REM rmdir /Q /S c:\msys64\var\lib\pacman\sync || cmd /c "exit  /b 0"
           REM c:\msys64\usr\bin\pacman --noconfirm -Syu || cmd /c "exit  /b 0"
