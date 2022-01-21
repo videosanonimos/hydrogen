@@ -232,12 +232,12 @@ for:
 
           C:\msys64\usr\bin\bash -lc "pacman-key --verify /c/projects/hydrogen/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig"
 
-          rmdir /Q /S c:\msys64\etc\pacman.d\gnupg || cmd /c "exit  /b 0"
+          REM rmdir /Q /S c:\msys64\etc\pacman.d\gnupg || cmd /c "exit  /b 0"
           
-          C:\msys64\usr\bin\bash -lc "pacman --noconfirm -U /c/projects/hydrogen/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz"
+          REM C:\msys64\usr\bin\bash -lc "pacman --noconfirm -U /c/projects/hydrogen/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz"
           
-          C:\msys64\usr\bin\bash -lc "pacman-key --init
-          C:\msys64\usr\bin\bash -lc "pacman-key --populate msys2" || cmd /c "exit  /b 0"
+          REM C:\msys64\usr\bin\bash -lc "pacman-key --init
+          REM C:\msys64\usr\bin\bash -lc "pacman-key --populate msys2" || cmd /c "exit  /b 0"
           C:\msys64\usr\bin\bash -lc "ls /var/lib/pacman/sync"
           
           c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -Sc || cmd /c "exit  /b 0"
