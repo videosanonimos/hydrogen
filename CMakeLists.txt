@@ -224,7 +224,6 @@ FIND_HELPER(LIBARCHIVE libarchive archive.h archive)
 IF( WANT_LIBARCHIVE AND LIBARCHIVE_FOUND)
     SET(WANT_LIBTAR FALSE)
 ENDIF()
-FIND_HELPER(LIBSNDFILE sndfile sndfile.h sndfile)
 FIND_HELPER(ALSA alsa alsa/asoundlib.h asound )
 FIND_LADSPA(LADSPA ladspa.h noise)
 
@@ -274,6 +273,7 @@ if(DOXYGEN_FOUND)
 		COMMENT "Generating API documentation with Doxygen"
 		VERBATIM)
 endif(DOXYGEN_FOUND)
+FIND_HELPER(LIBSNDFILE sndfile sndfile.h sndfile)
 
 #
 # COMPUTE H2CORE_HAVE_xxx xxx_STATUS_REPORT
