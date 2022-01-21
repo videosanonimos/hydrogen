@@ -254,7 +254,7 @@ for:
           REM *** Install dependencies ***
           c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -S -s libarchive || cmd /c "exit  /b 0"
           c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -S -q %MSYS_REPO%-libarchive || cmd /c "exit  /b 0"
-          c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -S -q %MSYS_REPO%-libsndfile-1.0.29-2 || cmd /c "exit  /b 0"
+          C:\msys64\usr\bin\bash -lc "pacman --noconfirm -U 'http://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-libsndfile-1.0.29-2-any.pkg.tar.zst'"
           c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -S -q %MSYS_REPO%-cppunit || cmd /c "exit  /b 0"
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-portaudio || cmd /c "exit  /b 0"
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-portmidi || cmd /c "exit  /b 0"
