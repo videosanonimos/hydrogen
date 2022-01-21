@@ -195,7 +195,7 @@ for:
 
           if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
 
-          set QTDIR="c:\Qt\5.6.3\%QTFOLDER%
+          set QTDIR="c:\Qt\5.6.3\%QTFOLDER%"
           set CMAKE_PREFIX_PATH=%QTDIR%
           set PATH=%MSYS%\bin;%PATH%
           set PKG_CONFIG_PATH=%MSYS%\lib\pkgconfig
