@@ -193,7 +193,7 @@ for:
 
           if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
 
-          set QTDIR="/c/Qt/5.6.3/msvc2015_64"
+          set QTDIR="c:\Qt\5.6.3\msvc2015_64"
           set CMAKE_PREFIX_PATH=%QTDIR%
           set PATH=%MSYS%\bin;%PATH%
           set PKG_CONFIG_PATH=%MSYS%\lib\pkgconfig
@@ -213,6 +213,7 @@ for:
           dir "c:\Qt" || cmd /c "exit  /b 0"
           dir "c:\Qt\5.6.3" || cmd /c "exit  /b 0"
           dir "c:\Qt\5.6.3\msvc2015_64" || cmd /c "exit  /b 0"
+          dir "c:\Qt\5.6.3\msvc2015_64\lib" || cmd /c "exit  /b 0"
 
           C:\msys64\usr\bin\bash -lc "sed -i 's/SigLevel    = Required DatabaseOptional/SigLevel = Never DatabaseNever PackageNever/' /etc/pacman.conf"
 
