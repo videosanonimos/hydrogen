@@ -211,6 +211,7 @@ for:
 
           dir "c:\" || cmd /c "exit  /b 0"
           dir "c:\Qt" || cmd /c "exit  /b 0"
+          dir "c:\Qt\5.6.3" || cmd /c "exit  /b 0"
 
           C:\msys64\usr\bin\bash -lc "sed -i 's/SigLevel    = Required DatabaseOptional/SigLevel = Never DatabaseNever PackageNever/' /etc/pacman.conf"
 
