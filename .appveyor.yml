@@ -222,6 +222,8 @@ for:
 
           C:\msys64\usr\bin\bash -lc "pacman --version"
           C:\msys64\usr\bin\bash -lc "cat /etc/pacman.conf"
+          C:\msys64\usr\bin\bash -lc "ls /usr/share/pacman"
+          C:\msys64\usr\bin\bash -lc "ls /usr/share/pacman/keyrings"
 
           C:\msys64\usr\bin\bash -lc "pacman-key --verify /c/projects/hydrogen/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig"
 
@@ -233,8 +235,6 @@ for:
           C:\msys64\usr\bin\bash -lc "pacman-key --populate mingw32" || cmd /c "exit  /b 0"
           C:\msys64\usr\bin\bash -lc "pacman-key --populate mingw64" || cmd /c "exit  /b 0"
           C:\msys64\usr\bin\bash -lc "pacman-key --populate msys2" || cmd /c "exit  /b 0"
-
-          rmdir /Q /S c:\msys64\var\lib\pacman\sync || cmd /c "exit  /b 0"
           
           c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -Sydd pacman || cmd /c "exit  /b 0"
           
