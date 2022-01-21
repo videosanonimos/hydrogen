@@ -37,6 +37,7 @@ ELSE()
         SET(IS_DEVEL_BUILD "true")
 ENDIF()
 
+SET(LIBSNDFILE_VERSION_PREV "1.0.17")
 
 #
 # CONFIG OPTIONS
@@ -143,6 +144,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG "-g ")#-Winline")
 # MANDATORY PKGS AND DEFAULT OPTIONS
 #
 MANDATORY_PKG(Threads)
+MANDATORY_PKG(LIBSNDFILE)
 
 # http://doc.qt.io/qt-5/cmake-manual.html
 FIND_PACKAGE(Qt5Widgets REQUIRED)
@@ -220,6 +222,8 @@ FIND_HELPER(LIBARCHIVE libarchive archive.h archive)
 IF( WANT_LIBARCHIVE AND LIBARCHIVE_FOUND)
     SET(WANT_LIBTAR FALSE)
 ENDIF()
+FIND_HELPER(LIBSNDFILE sndfile sndfile.h sndfile)
+
 FIND_HELPER(ALSA alsa alsa/asoundlib.h asound )
 FIND_LADSPA(LADSPA ladspa.h noise)
 
@@ -273,11 +277,18 @@ endif(DOXYGEN_FOUND)
 #
 # COMPUTE H2CORE_HAVE_xxx xxx_STATUS_REPORT
 #
-SET(STATUS_LIST LIBTAR LIBARCHIVE LADSPA ALSA OSS JACK OSC COREAUDIO COREMIDI PORTAUDIO PORTMIDI PULSEAUDIO LASH LRDF RUBBERBAND CPPUNIT )
+SET(STATUS_LIST LIBSNDFILE LIBTAR LIBARCHIVE LADSPA ALSA OSS JACK OSC COREAUDIO COREMIDI PORTAUDIO PORTMIDI PULSEAUDIO LASH LRDF RUBBERBAND CPPUNIT )
 FOREACH( _pkg ${STATUS_LIST})
     COMPUTE_PKGS_FLAGS(${_pkg})
 ENDFOREACH()
 
+# LIBSNDFILE CHECKS
+STRING( COMPARE GREATER "${LIBSNDFILE_VERSION}" "${LIBSNDFILE_VERSION_PREV}" LIBSNDFILE_VERSION_OK)
+IF(LIBSNDFILE_VERSION_OK)
+    SET(LIBSNDFILE_MSG "libsndfile supports FLAC and OGG sound file formats")
+ELSE()
+       SET(LIBSNDFILE_MSG "libsndfile version must be greater than ${LIBSNDFILE_VERSION_PREV} to support FLAC and OGG sound file formats. Found version: ${LIBSNDFILE_VERSION}")
+ENDIF()
 
 # RUBBERBAND information
 SET(LIBRUBBERBAND_MSG "The use of librubberband2 is marked as experimental.
@@ -314,7 +325,9 @@ COLOR_MESSAGE("${cyan}Installation Summary${reset}
 
 COLOR_MESSAGE("${cyan}Main librarires${reset}")
 COLOR_MESSAGE("* ${purple}libQt${reset}                        : ${Qt5Widgets_VERSION}")
-COLOR_MESSAGE("* ${purple}libtar${reset}                       : ${LIBTAR_STATUS}
+COLOR_MESSAGE("* ${purple}libsndfile${reset}                   : ${LIBSNDFILE_STATUS}
+*                                ${LIBSNDFILE_MSG}
+* ${purple}libtar${reset}                       : ${LIBTAR_STATUS}
 * ${purple}libarchive${reset}                   : ${LIBARCHIVE_STATUS}
 * ${purple}ladspa${reset}                       : ${LADSPA_STATUS}\n"
 )

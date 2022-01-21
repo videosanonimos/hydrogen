@@ -22,7 +22,7 @@
 
 #include "core/Basics/Sample.h"
 
-#include "sndfile.h"
+#include <sndfile.h>
 #ifdef H2CORE_HAVE_RUBBERBAND
 #include <rubberband/RubberBandStretcher.h>
 #define RUBBER_SAMPLE_PATH "/usr/local/share/hydrogen/data/drumkits/GMkit/cym_Jazz.flac"
