@@ -264,7 +264,7 @@ for:
           rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
           mkdir build
           cd build
-          cmake -G "%GENERATOR%" -DCMAKE_PATH_PREFIX="%CMAKE_PATH_PREFIX% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% %CMAKE_FLAGS% -DJACK_INCLUDE_DIRS="c:/%PROGRAM_FILES%/JACK2/include" -DJACK_LIBRARIES="c:/%PROGRAM_FILES%/JACK2/lib/%LIBJACK%.a" ..
+          cmake -G "%GENERATOR%" -DCMAKE_PREFIX_PATH=%CMAKE_PREFIX_PATH% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% %CMAKE_FLAGS% -DJACK_INCLUDE_DIRS="c:/%PROGRAM_FILES%/JACK2/include" -DJACK_LIBRARIES="c:/%PROGRAM_FILES%/JACK2/lib/%LIBJACK%.a" ..
 
     build_script:
       - cmd: |-
