@@ -209,13 +209,8 @@ for:
 
           REM *** Updating packages
 
-          dir "c:\msys64" || cmd /c "exit  /b 0"
-          dir "c:\msys64\var" || cmd /c "exit  /b 0"
-          dir "c:\msys64\var\lib" || cmd /c "exit  /b 0"
-          dir "c:\msys64\var\lib\pacman" || cmd /c "exit  /b 0"
-          dir "c:\msys64\etc" || cmd /c "exit  /b 0"
-          dir "c:\msys64\etc\pacman.d" || cmd /c "exit  /b 0"
-          dir "c:\msys64\etc\pacman.d\gnupg" || cmd /c "exit  /b 0"
+          dir "c:\" || cmd /c "exit  /b 0"
+          dir "c:\Qt" || cmd /c "exit  /b 0"
 
           C:\msys64\usr\bin\bash -lc "sed -i 's/SigLevel    = Required DatabaseOptional/SigLevel = Never DatabaseNever PackageNever/' /etc/pacman.conf"
 
@@ -259,7 +254,6 @@ for:
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-portaudio || cmd /c "exit  /b 0"
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-portmidi || cmd /c "exit  /b 0"
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libwinpthread-git || cmd /c "exit  /b 0"
-          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-qt5 || cmd /c "exit  /b 0"
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ladspa-sdk || cmd /c "exit  /b 0"
 
           REM *** INIT SUBMODULES ***
