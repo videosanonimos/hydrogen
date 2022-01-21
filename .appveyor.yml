@@ -277,7 +277,7 @@ for:
           rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
           mkdir build
           cd build
-          cmake -G "%GENERATOR%" -DCMAKE_PREFIX_PATH=%CMAKE_PREFIX_PATH% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% %CMAKE_FLAGS% -DJACK_INCLUDE_DIRS="c:/%PROGRAM_FILES%/JACK2/include" -DJACK_LIBRARIES="c:/%PROGRAM_FILES%/JACK2/lib/%LIBJACK%.a" -DLIBSNDFILE_INCLUDE_DIRS="%LIBSNDPATH%/include" -DLIBSNDFILE_LIBRARIES="%LIBSNDPATH%/lib/sndfile.lib" ..
+          cmake -G "%GENERATOR%" -DCMAKE_PREFIX_PATH=%CMAKE_PREFIX_PATH% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% %CMAKE_FLAGS% -DJACK_INCLUDE_DIRS="c:/%PROGRAM_FILES%/JACK2/include" -DJACK_LIBRARIES="c:/%PROGRAM_FILES%/JACK2/lib/%LIBJACK%.a" -DLIBSNDFILE_INCLUDE_DIRS="c:/projects/hydrogen/libsndfile-1.0.31-win64/include" -DLIBSNDFILE_LIBRARIES="c:/projects/hydrogen/libsndfile-1.0.31-win64/lib/sndfile.lib" ..
 
     build_script:
       - cmd: |-
