@@ -241,7 +241,7 @@ for:
           C:\msys64\usr\bin\bash -lc "ls /var/lib/pacman/sync"
           
           c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -Scc || cmd /c "exit  /b 0"
-          c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -Syu || cmd /c "exit  /b 0"
+          c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -Sydd pacman || cmd /c "exit  /b 0"
           C:\msys64\usr\bin\bash -lc "ls /var/lib/pacman/sync"
           
 
