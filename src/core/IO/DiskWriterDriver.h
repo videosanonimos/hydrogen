@@ -23,7 +23,7 @@
 #ifndef DISK_WRITER_DRIVER_H
 #define DISK_WRITER_DRIVER_H
 
-#include <sndfile.h>
+#include "../sndfile.h"
 
 #include <inttypes.h>
 

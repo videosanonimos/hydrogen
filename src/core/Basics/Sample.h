@@ -25,7 +25,7 @@
 
 #include <memory>
 #include <vector>
-#include <sndfile.h>
+#include "../sndfile.h"
 
 #include <core/Object.h>
 

@@ -22,7 +22,7 @@
 
 #include "AudioFile.h"
 
-#include <sndfile.h>
+#include "sndfile.h"
 #include <memory>
 
 static constexpr qint64 BUFFER_SIZE = 4096;

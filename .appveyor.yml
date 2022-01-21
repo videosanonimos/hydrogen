@@ -11,6 +11,7 @@ environment:
       CMAKE_FLAGS: "-DWANT_DEBUG:BOOL=OFF -DWIN64:BOOL=ON"
       appveyor_build_worker_image: Visual Studio 2017
       LIBJACK: libjack64.dll
+      QTFOLDER: msvc2015_64
       CHOCO_ARCH:
       PROGRAM_FILES: "Program Files"
 
@@ -22,6 +23,7 @@ environment:
       CMAKE_FLAGS: "-DWANT_DEBUG:BOOL=OFF -DWIN64:BOOL=OFF"
       appveyor_build_worker_image: Visual Studio 2017
       LIBJACK: libjack.dll
+      QTFOLDER: msvc2015
       CHOCO_ARCH:  --x86
       PROGRAM_FILES: "Program Files (x86)"
 
@@ -193,7 +195,7 @@ for:
 
           if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
 
-          set QTDIR="c:\Qt\5.6.3\msvc2015_64"
+          set QTDIR="c:\Qt\5.6.3\%QTFOLDER%
           set CMAKE_PREFIX_PATH=%QTDIR%
           set PATH=%MSYS%\bin;%PATH%
           set PKG_CONFIG_PATH=%MSYS%\lib\pkgconfig
@@ -212,8 +214,8 @@ for:
           dir "c:\" || cmd /c "exit  /b 0"
           dir "c:\Qt" || cmd /c "exit  /b 0"
           dir "c:\Qt\5.6.3" || cmd /c "exit  /b 0"
-          dir "c:\Qt\5.6.3\msvc2015_64" || cmd /c "exit  /b 0"
-          dir "c:\Qt\5.6.3\msvc2015_64\lib" || cmd /c "exit  /b 0"
+          dir "c:\Qt\5.6.3\%QTFOLDER%" || cmd /c "exit  /b 0"
+          dir "c:\Qt\5.6.3\%QTFOLDER%\lib" || cmd /c "exit  /b 0"
 
           C:\msys64\usr\bin\bash -lc "sed -i 's/SigLevel    = Required DatabaseOptional/SigLevel = Never DatabaseNever PackageNever/' /etc/pacman.conf"
 
