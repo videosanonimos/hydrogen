@@ -241,6 +241,7 @@ for:
           C:\msys64\usr\bin\bash -lc "ls /var/lib/pacman/sync"
           
           c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -Scc || cmd /c "exit  /b 0"
+          C:\msys64\usr\bin\bash -lc "pacman --noconfirm -U 'http://repo.msys2.org/msys/x86_64/pacman-5.2.2-1-x86_64.pkg.tar.xz'"
           c:\msys64\usr\bin\pacman --noconfirm --disable-download-timeout -Sydd pacman || cmd /c "exit  /b 0"
           C:\msys64\usr\bin\bash -lc "ls /var/lib/pacman/sync"
           
