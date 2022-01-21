@@ -209,7 +209,7 @@ for:
           dir "c:\%PROGRAM_FILES%\JACK2"
           dir "c:\%PROGRAM_FILES%\JACK2\lib"
 
-          curl -O https://github.com/libsndfile/libsndfile/releases/download/1.0.31/libsndfile-1.0.31-win64.zip
+          curl -LO https://github.com/libsndfile/libsndfile/releases/download/1.0.31/libsndfile-1.0.31-win64.zip
           dir
           file libsndfile-1.0.31-win64.zip || cmd /c "exit  /b 0"
           unzip libsndfile-1.0.31-win64.zip || cmd /c "exit  /b 0"
