@@ -216,8 +216,9 @@ for:
           dir
           file %LIBSNDFILE%.zip || cmd /c "exit  /b 0"
           unzip %LIBSNDFILE%.zip || cmd /c "exit  /b 0"
-          set LIBSNDPATH="%cd%/%LIBSNDFILE% || cmd /c "exit  /b 0"
+          set LIBSNDPATH="%cd%\%LIBSNDFILE% || cmd /c "exit  /b 0"
           echo %LIBSNDPATH%
+          dir 
           dir %LIBSNDPATH% || cmd /c "exit  /b 0"
 
           REM *** Updating packages
