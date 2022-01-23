@@ -216,7 +216,7 @@ for:
           dir
           file %LIBSNDFILE%.zip || cmd /c "exit  /b 0"
           unzip %LIBSNDFILE%.zip || cmd /c "exit  /b 0"
-          set LIBSNDPATH="%cd%\%LIBSNDFILE% || cmd /c "exit  /b 0"
+          set LIBSNDPATH="%cd%\%LIBSNDFILE%"
           echo %LIBSNDPATH%
           dir 
           dir %LIBSNDPATH% || cmd /c "exit  /b 0"
