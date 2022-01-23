@@ -211,6 +211,7 @@ for:
           dir "c:\%PROGRAM_FILES%\JACK2"
           dir "c:\%PROGRAM_FILES%\JACK2\lib"
 
+          echo https://github.com/libsndfile/libsndfile/releases/download/v1.0.29/%LIBSNDFILE%.zip
           curl -LO https://github.com/libsndfile/libsndfile/releases/download/v1.0.29/%LIBSNDFILE%.zip
           dir
           file %LIBSNDFILE%.zip || cmd /c "exit  /b 0"
