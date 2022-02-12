@@ -46,14 +46,6 @@ environment:
   ARTIFACT_BRANCH: master-artifacts
   matrix:
 
-    - job_name: 'Ubuntu 20.04'
-      job_group: 'Linux'
-      appveyor_build_worker_image: Ubuntu2004
-
-    - job_name: 'OS X'
-      job_group: 'Mac OS X'
-      appveyor_build_worker_image: macos
-
     - job_name: 'Windows64'
       job_group: 'Windows'
       MSYS: 'C:\msys64\mingw64'
@@ -278,7 +270,7 @@ for:
     before_build:
       cmd: |-
 
-          if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
+          REM if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
 
           set QTDIR=%MSYS%
           set CMAKE_PREFIX_PATH=%QTDIR%
@@ -287,6 +279,7 @@ for:
 
           cmake --version
           g++ --version
+          choco upgrade -y chocolatey
           choco install %CHOCO_ARCH% -y jack
 
           dir "c:\%PROGRAM_FILES%\JACK2"
