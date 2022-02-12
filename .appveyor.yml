@@ -266,7 +266,6 @@ for:
       only:
         - job_group: 'Windows'
 
-    cache: '%USERPROFILE%\AppData\Roaming\ccache'
     before_build:
       cmd: |-
 
@@ -279,7 +278,6 @@ for:
 
           cmake --version
           g++ --version
-          choco upgrade -y chocolatey
           choco install %CHOCO_ARCH% -y jack
 
           dir "c:\%PROGRAM_FILES%\JACK2"
@@ -301,10 +299,6 @@ for:
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libwinpthread-git
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-qt5
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ladspa-sdk
-          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ccache
-
-          ccache -M 256M
-          ccache -s
 
           REM *** INIT SUBMODULES ***
           git submodule init
@@ -314,7 +308,7 @@ for:
           rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
           mkdir build
           cd build
-          cmake -G "%GENERATOR%" -DCMAKE_BUILD_TYPE=%BUILD_TYPE% %CMAKE_FLAGS% -DJACK_INCLUDE_DIRS="c:/%PROGRAM_FILES%/JACK2/include" -DJACK_LIBRARIES="c:/%PROGRAM_FILES%/JACK2/lib/%LIBJACK%.a" -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ..
+          cmake -G "%GENERATOR%" -DCMAKE_BUILD_TYPE=%BUILD_TYPE% %CMAKE_FLAGS% -DJACK_INCLUDE_DIRS="c:/%PROGRAM_FILES%/JACK2/include" -DJACK_LIBRARIES="c:/%PROGRAM_FILES%/JACK2/lib/%LIBJACK%.a" ..
 
     build_script:
       - cmd: |-
