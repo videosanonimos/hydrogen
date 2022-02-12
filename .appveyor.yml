@@ -46,6 +46,14 @@ environment:
   ARTIFACT_BRANCH: master-artifacts
   matrix:
 
+    - job_name: 'Ubuntu 20.04'
+      job_group: 'Linux'
+      appveyor_build_worker_image: Ubuntu2004
+
+    - job_name: 'OS X'
+      job_group: 'Mac OS X'
+      appveyor_build_worker_image: macos
+
     - job_name: 'Windows64'
       job_group: 'Windows'
       MSYS: 'C:\msys64\mingw64'
@@ -266,10 +274,11 @@ for:
       only:
         - job_group: 'Windows'
 
+    cache: '%USERPROFILE%\AppData\Roaming\ccache'
     before_build:
       cmd: |-
 
-          REM if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
+          if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
 
           set QTDIR=%MSYS%
           set CMAKE_PREFIX_PATH=%QTDIR%
@@ -278,8 +287,6 @@ for:
 
           cmake --version
           g++ --version
-
-          echo "%CHOCO_ARCH%"
           choco install %CHOCO_ARCH% jack --version 1.9.17 -my
 
           dir "c:\%PROGRAM_FILES%\JACK2"
@@ -301,6 +308,10 @@ for:
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libwinpthread-git
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-qt5
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ladspa-sdk
+          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ccache
+
+          ccache -M 256M
+          ccache -s
 
           REM *** INIT SUBMODULES ***
           git submodule init
@@ -310,7 +321,7 @@ for:
           rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
           mkdir build
           cd build
-          cmake -G "%GENERATOR%" -DCMAKE_BUILD_TYPE=%BUILD_TYPE% %CMAKE_FLAGS% -DJACK_INCLUDE_DIRS="c:/%PROGRAM_FILES%/JACK2/include" -DJACK_LIBRARIES="c:/%PROGRAM_FILES%/JACK2/lib/%LIBJACK%.a" ..
+          cmake -G "%GENERATOR%" -DCMAKE_BUILD_TYPE=%BUILD_TYPE% %CMAKE_FLAGS% -DJACK_INCLUDE_DIRS="c:/%PROGRAM_FILES%/JACK2/include" -DJACK_LIBRARIES="c:/%PROGRAM_FILES%/JACK2/lib/%LIBJACK%.a" -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ..
 
     build_script:
       - cmd: |-
