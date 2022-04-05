@@ -275,7 +275,7 @@ for:
           if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
 
           set QTDIR=%QT_IMAGE%
-          set CMAKE_PREFIX_PATH=%QTDIR%
+          set CMAKE_PREFIX_PATH=%MSYS%;%QTDIR%
           set PATH=%MSYS%\bin;%PATH%
           set PKG_CONFIG_PATH=%MSYS%\lib\pkgconfig
 
