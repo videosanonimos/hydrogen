@@ -57,7 +57,7 @@ environment:
       OPENSSL_DIR: OpenSSL-Win64
       LIBSSL: libssl-1_1-x64.dll
       LIBCRYPTO: libcrypto-1_1-x64.dll
-      QT_IMAGE: 'C:\Qt\5.15.2\msvc2019_64'
+      QT_IMAGE: 'C:\Qt\5.15.2\mingw81_64'
 
       CHOCO_ARCH:
       PROGRAM_FILES: "Program Files"
@@ -73,7 +73,7 @@ environment:
       OPENSSL_DIR: OpenSSL-Win32
       LIBSSL: libssl-1_1.dll
       LIBCRYPTO: libcrypto-1_1.dll
-      QT_IMAGE: 'C:\Qt\5.15.2\msvc2019'
+      QT_IMAGE: 'C:\Qt\5.15.2\mingw81_32'
 
       CHOCO_ARCH:  --x86
       PROGRAM_FILES: "Program Files (x86)"
