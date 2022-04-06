@@ -57,7 +57,6 @@ environment:
       OPENSSL_DIR: OpenSSL-Win64
       LIBSSL: libssl-1_1-x64.dll
       LIBCRYPTO: libcrypto-1_1-x64.dll
-      QT_IMAGE: 'C:\Qt\5.15.2\mingw81_64'
 
       CHOCO_ARCH:
       PROGRAM_FILES: "Program Files"
@@ -73,7 +72,6 @@ environment:
       OPENSSL_DIR: OpenSSL-Win32
       LIBSSL: libssl-1_1.dll
       LIBCRYPTO: libcrypto-1_1.dll
-      QT_IMAGE: 'C:\Qt\5.15.2\mingw81_32'
 
       CHOCO_ARCH:  --x86
       PROGRAM_FILES: "Program Files (x86)"
@@ -274,8 +272,8 @@ for:
 
           if not %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if %job_name%==Windows32 appveyor exit
 
-          set QTDIR=%QT_IMAGE%
-          set CMAKE_PREFIX_PATH=%MSYS%;%QTDIR%
+          set QTDIR=%MSYS%
+          set CMAKE_PREFIX_PATH=%QTDIR%
           set PATH=%MSYS%\bin;%PATH%
           set PKG_CONFIG_PATH=%MSYS%\lib\pkgconfig
 
@@ -296,6 +294,8 @@ for:
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libwinpthread-git
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ladspa-sdk
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ccache
+          c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-qt5
+          c:\msys64\usr\bin\pacman --noconfirm -U https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-qt5-translations-5.15.2-3-any.pkg.tar.zst
 
           ccache -M 256M
           ccache -s
