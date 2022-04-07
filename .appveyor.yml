@@ -362,8 +362,8 @@ on_finish:
   - cmd: if %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH%  appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\build\CMakeCache.txt
   - cmd: if %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH%  appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\build\CMakeFiles\CMakeOutput.log
   - cmd: if %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH%  appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\build\CMakeFiles\CMakeError.log
-  - cmd: if %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH%  appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\build\Hydrogen-1.1.1-win64.exe || cmd /c "exit /b 1"
-  - cmd: if %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH%  appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\build\Hydrogen-1.1.1-win32.exe || cmd /c "exit /b 1"
+  - cmd: if %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% if not %job_name%==Windows32  appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\build\Hydrogen-1.1.1-win64.exe || cmd /c "exit /b 1"
+  - cmd: if %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH%  if %job_name%==Windows32 appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\build\Hydrogen-1.1.1-win32.exe || cmd /c "exit /b 1"
 
 
   - cmd: |
