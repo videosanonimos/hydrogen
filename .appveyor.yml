@@ -57,6 +57,7 @@ environment:
       OPENSSL_DIR: OpenSSL-Win64
       LIBSSL: libssl-1_1-x64.dll
       LIBCRYPTO: libcrypto-1_1-x64.dll
+      QT_LOCK_REPO: 'mingw/x86_64/mingw-w64-x86_64'
 
       CHOCO_ARCH:
       PROGRAM_FILES: "Program Files"
@@ -72,6 +73,7 @@ environment:
       OPENSSL_DIR: OpenSSL-Win32
       LIBSSL: libssl-1_1.dll
       LIBCRYPTO: libcrypto-1_1.dll
+      QT_LOCK_REPO: 'mingw/mingw32/mingw-w64-i686'
 
       CHOCO_ARCH:  --x86
       PROGRAM_FILES: "Program Files (x86)"
@@ -295,7 +297,7 @@ for:
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ladspa-sdk
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ccache
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-qt5
-          c:\msys64\usr\bin\pacman --noconfirm -U https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-qt5-tools-5.15.2-2-any.pkg.tar.zst
+          c:\msys64\usr\bin\pacman --noconfirm -U https://repo.msys2.org/%QT_LOCK_REPO%-qt5-tools-5.15.2-2-any.pkg.tar.zst
           
           ccache -M 256M
           ccache -s
