@@ -43,7 +43,7 @@
 
 environment:
   GENERATOR: "MinGW Makefiles"
-  ARTIFACT_BRANCH: master-artifacts
+  ARTIFACT_BRANCH: phil-fix-1557-midi-out-channel-artifacts
   matrix:
 
     - job_name: 'Ubuntu 20.04'
