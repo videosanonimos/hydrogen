@@ -287,7 +287,7 @@ for:
 
           cmake --version
           g++ --version
-          choco install %CHOCO_ARCH% jack --version 1.9.17 -my
+          choco install %CHOCO_ARCH% -y jack
 
           REM *** Results are ignored since a dependency was not properly installed in 32 bit Windows. But the .dll files required are installed regardless, so we don't care.***
 
@@ -300,6 +300,7 @@ for:
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-portaudio
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-portmidi
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-libwinpthread-git
+          REM *** As of 2022-20-09 the package database refresh (-y) is required to get the newest qt package and to avoid a critical bug in less recent ones. In addition, the refresh _must_ take place _after_ installing libwinpthread (which otherwise fails). ***
           c:\msys64\usr\bin\pacman --noconfirm -S -y %MSYS_REPO%-qt5
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ladspa-sdk
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ccache
