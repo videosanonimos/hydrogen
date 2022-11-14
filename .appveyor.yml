@@ -43,38 +43,38 @@
 
 environment:
   GENERATOR: "MinGW Makefiles"
-  ARTIFACT_BRANCH: master-artifacts
+  ARTIFACT_BRANCH: test-artifacts
   matrix:
 
-    - job_name: 'Ubuntu 20.04'
-      job_group: 'Linux'
-      appveyor_build_worker_image: Ubuntu2004
+    # - job_name: 'Ubuntu 20.04'
+    #   job_group: 'Linux'
+    #   appveyor_build_worker_image: Ubuntu2004
 
-    - job_name: 'OS X'
-      job_group: 'Mac OS X'
-      appveyor_build_worker_image: macos
+    # - job_name: 'OS X'
+    #   job_group: 'Mac OS X'
+    #   appveyor_build_worker_image: macos
 
-    - job_name: 'Windows64'
-      job_group: 'Windows'
-      MSYS: 'C:\msys64\mingw64'
-      MSYS_REPO: 'mingw64/mingw-w64-x86_64'
-      BUILD_TYPE: "Release"
-      CMAKE_FLAGS: "-DWANT_DEBUG:BOOL=OFF -DWIN64:BOOL=ON"
-      appveyor_build_worker_image: Visual Studio 2019
-      LIBJACK: libjack64.dll
-      OPENSSL_DIR: OpenSSL-Win64
-      LIBSSL: libssl-1_1-x64.dll
-      LIBCRYPTO: libcrypto-1_1-x64.dll
+    # - job_name: 'Windows64'
+    #   job_group: 'Windows'
+    #   MSYS: 'C:\msys64\mingw64'
+    #   MSYS_REPO: 'mingw64/mingw-w64-x86_64'
+    #   BUILD_TYPE: "Release"
+    #   CMAKE_FLAGS: "-DWANT_DEBUG:BOOL=OFF -DWIN64:BOOL=ON"
+    #   appveyor_build_worker_image: Visual Studio 2019
+    #   LIBJACK: libjack64.dll
+    #   OPENSSL_DIR: OpenSSL-Win64
+    #   LIBSSL: libssl-1_1-x64.dll
+    #   LIBCRYPTO: libcrypto-1_1-x64.dll
 
-      CHOCO_ARCH:
-      PROGRAM_FILES: "Program Files"
+    #   CHOCO_ARCH:
+    #   PROGRAM_FILES: "Program Files"
 
     - job_name: 'Windows32'
       job_group: 'Windows'
       MSYS: 'C:\msys64\mingw32'
       MSYS_REPO: 'mingw-w64-i686'
       BUILD_TYPE: "Release"
-      CMAKE_FLAGS: "-DWANT_DEBUG:BOOL=OFF -DWIN64:BOOL=OFF"
+      CMAKE_FLAGS: "-DWANT_DEBUG:BOOL=ON -DWIN64:BOOL=OFF"
       appveyor_build_worker_image: Visual Studio 2019
       LIBJACK: libjack.dll
       OPENSSL_DIR: OpenSSL-Win32
@@ -346,7 +346,7 @@ for:
           SET CORE_PATH=%cd%\src\core
           echo %CORE_PATH%
           set PATH=%CORE_PATH%;%PATH%
-          src\tests\tests.exe --appveyor --output-file=testOutput.log
+          src\tests\tests.exe --appveyor --verbose=DEBUG --output-file=testOutput.log
 
           REM *** In case the test passed, we delete its output. If it fails, the
           REM     script won't reach this point and the output will be uploaded later on ***
