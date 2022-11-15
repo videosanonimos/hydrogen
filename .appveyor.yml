@@ -346,11 +346,14 @@ for:
           SET CORE_PATH=%cd%\src\core
           echo %CORE_PATH%
           set PATH=%CORE_PATH%;%PATH%
-          src\tests\tests.exe --appveyor --verbose=DEBUG --output-file=testOutput.log
+          CMD /C src\tests\tests.exe --appveyor -VDebug --output-file=testOutput.log
 
           REM *** In case the test passed, we delete its output. If it fails, the
           REM     script won't reach this point and the output will be uploaded later on ***
-          IF %ERRORLEVEL% EQU 0 (del testOutput.log)
+          IF %ERRORLEVEL% EQU 0 (
+              del testOutput.log
+              ECHO Everything worked
+          )
 
           7z a %APPVEYOR_BUILD_FOLDER%\testresults.zip %TEMP%\hydrogen || cmd /c "exit  /b 1"
           if %APPVEYOR_REPO_BRANCH%==%ARTIFACT_BRANCH% appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\testresults.zip
