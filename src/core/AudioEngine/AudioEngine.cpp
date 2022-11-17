@@ -2571,6 +2571,7 @@ QString AudioEngine::toQString( const QString& sPrefix, bool bShort ) const {
 void AudioEngineLocking::assertAudioEngineLocked() const 
 {
 #ifndef NDEBUG
+	qDebug() << "AudioEngineLocking::assertAudioEngineLocked()";
 		if ( m_bNeedsLock ) {
 			H2Core::Hydrogen::get_instance()->getAudioEngine()->assertLocked();
 		}
