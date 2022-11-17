@@ -202,12 +202,12 @@ QString Base::base_clock( const QString& sMsg )
 		// Clock is invoked for the first time.
 		sResult = "Start clocking";
 	} else {
-		sResult =  QString( "elapsed [%1]ms" )
-			.arg( ( now.tv_sec - __last_clock.tv_sec ) * 1000.0 +
-				  ( now.tv_usec - __last_clock.tv_usec ) / 1000.0 );
+		sResult =  QString( "elapsed [%1]s" )
+			.arg( ( now.tv_sec - __last_clock.tv_sec ) * 1.0 +
+				  ( now.tv_usec - __last_clock.tv_usec ) / 1000000.0 );
 	}
 
-	__last_clock = now;
+	// __last_clock = now;
 
 	if ( ! sMsg.isEmpty() ) {
 		sResult = QString( "%1: %2" ).arg( sMsg ).arg( sResult );

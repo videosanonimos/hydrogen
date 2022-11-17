@@ -21,6 +21,7 @@
  */
 
 #include <core/CoreActionController.h>
+#include <core/AudioEngine/AudioEngine.h>
 #include <core/AudioEngine/AudioEngineTests.h>
 #include <core/Hydrogen.h>
 #include <core/Preferences/Preferences.h>
@@ -72,6 +73,7 @@ void TransportTest::testFrameToTickConversion() {
 }
 
 void TransportTest::testTransportProcessing() {
+	qDebug() << H2Core::AudioEngine::base_clock_in( "TransportTest::testTransportProcessing");
 	___INFOLOG( "" );
 	auto pHydrogen = Hydrogen::get_instance();
 
@@ -86,6 +88,7 @@ void TransportTest::testTransportProcessing() {
 		perform( &AudioEngineTests::testTransportProcessing );
 	}
 	___INFOLOG( "passed" );
+	qDebug() << "TransportTest::testTransportProcessing passed";
 }
 
 void TransportTest::testTransportProcessingTimeline() {
@@ -210,6 +213,8 @@ void TransportTest::testSongSizeChangeInLoopMode() {
 }
 
 void TransportTest::testPlaybackTrack() {
+	
+	qDebug() << H2Core::AudioEngine::base_clock_in( "TransportTest::testPlaybackTrack");
 	___INFOLOG( "" );
 
 	QString sSongFile = H2TEST_FILE( "song/AE_playbackTrack.h2song" );
@@ -220,9 +225,12 @@ void TransportTest::testPlaybackTrack() {
 	H2TEST_ASSERT_AUDIO_FILES_EQUAL( sRefFile, sOutFile );
 	Filesystem::rm( sOutFile );
 	___INFOLOG( "passed" );
+	qDebug() << "TransportTest::testPlaybackTrack passed";
 }
 
 void TransportTest::testSampleConsistency() {
+	
+	qDebug() << H2Core::AudioEngine::base_clock_in( "TransportTest::testSampleConsistency");
 	___INFOLOG( "" );
 
 	const QString sSongFile = H2TEST_FILE( "song/AE_sampleConsistency.h2song" );
@@ -246,6 +254,7 @@ void TransportTest::testSampleConsistency() {
 	H2TEST_ASSERT_AUDIO_FILES_DATA_EQUAL( sRefFile, sOutFile );
 	Filesystem::rm( sOutFile );
 	___INFOLOG( "passed" );
+	qDebug() << "TransportTest::testSampleConsistency passed";
 }
 
 void TransportTest::testNoteEnqueuing() {
