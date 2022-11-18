@@ -256,8 +256,14 @@ void TestHelper::exportSong( const QString& sSongFile, const QString& sFileName 
 
 	bool bDone = false;
 	while ( ! bDone ) {
-		qDebug() << "TestHelper::exportSong 4.1";
 		H2Core::Event event = pQueue->pop_event();
+
+		if ( event.type == H2Core::EVENT_PROGRESS ) {
+			qDebug() << "TestHelper::exportSong 4.1 : " <<
+				event.value << "% done";
+		} else {			
+			qDebug() << "TestHelper::exportSong 4.1 no progress";
+		}
 
 		if (event.type == H2Core::EVENT_PROGRESS && event.value == 100) {
 			bDone = true;
