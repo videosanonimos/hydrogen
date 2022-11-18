@@ -237,21 +237,31 @@ void TransportTest::testSampleConsistency() {
 	const QString sDrumkitDir = H2TEST_FILE( "drumkits/sampleKit/" );
 	const QString sOutFile = Filesystem::tmp_file_path("testsampleConsistency.wav");
 	const QString sRefFile = H2TEST_FILE("drumkits/sampleKit/longSample.flac");
+	
+	qDebug() << "TransportTest::testSampleConsistency 0";
 
 	auto pHydrogen = H2Core::Hydrogen::get_instance();
 	auto pCoreActionController = pHydrogen->getCoreActionController();
+
+	qDebug() << "TransportTest::testSampleConsistency 1";
 	
 	auto pSong = H2Core::Song::load( sSongFile );
+	qDebug() << "TransportTest::testSampleConsistency 2";
 
 	CPPUNIT_ASSERT( pSong != nullptr );
+	qDebug() << "TransportTest::testSampleConsistency 3";
 		
 	pHydrogen->setSong( pSong );
+	qDebug() << "TransportTest::testSampleConsistency 4";
 
 	// Apply drumkit containing the long sample to be tested.
 	pCoreActionController->setDrumkit( sDrumkitDir, true );
+	qDebug() << "TransportTest::testSampleConsistency 5";
 	
 	TestHelper::exportSong( sOutFile );
+	qDebug() << "TransportTest::testSampleConsistency 6";
 	H2TEST_ASSERT_AUDIO_FILES_DATA_EQUAL( sRefFile, sOutFile );
+	qDebug() << "TransportTest::testSampleConsistency 7";
 	Filesystem::rm( sOutFile );
 	___INFOLOG( "passed" );
 	qDebug() << "TransportTest::testSampleConsistency passed";

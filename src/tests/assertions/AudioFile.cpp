@@ -25,6 +25,8 @@
 #include <sndfile.h>
 #include <memory>
 
+#include <QDebug>
+
 static constexpr qint64 BUFFER_SIZE = 4096;
 
 void H2Test::checkAudioFilesEqual(const QString& sExpected, const QString& sActual, CppUnit::SourceLine sourceLine)
@@ -96,6 +98,7 @@ void H2Test::checkAudioFilesEqual(const QString& sExpected, const QString& sActu
 
 void H2Test::checkAudioFilesDataEqual(const QString& sExpected, const QString& sActual, CppUnit::SourceLine sourceLine)
 {
+	qDebug() << "H2Test::checkAudioFilesDataEqual 0";
 	SF_INFO expectedInfo = {0};
 	std::unique_ptr<SNDFILE, decltype(&sf_close)>
 		f1{ sf_open( sExpected.toLocal8Bit().data(), SFM_READ, &expectedInfo), sf_close };
@@ -107,6 +110,7 @@ void H2Test::checkAudioFilesDataEqual(const QString& sExpected, const QString& s
 		);
 		throw CppUnit::Exception(msg, sourceLine);
 	}
+	qDebug() << "H2Test::checkAudioFilesDataEqual 1";
 
 	SF_INFO actualInfo = {0};
 	std::unique_ptr<SNDFILE, decltype(&sf_close)>
@@ -119,6 +123,7 @@ void H2Test::checkAudioFilesDataEqual(const QString& sExpected, const QString& s
 		);
 		throw CppUnit::Exception(msg, sourceLine);
 	}
+	qDebug() << "H2Test::checkAudioFilesDataEqual 2";
 
 	if ( expectedInfo.frames > actualInfo.frames ) {
 		CppUnit::Message msg(
@@ -128,6 +133,7 @@ void H2Test::checkAudioFilesDataEqual(const QString& sExpected, const QString& s
 			.toLocal8Bit().data() );
 		throw CppUnit::Exception(msg, sourceLine);
 	}
+	qDebug() << "H2Test::checkAudioFilesDataEqual 3";
 
 	auto totalSamples = actualInfo.frames * actualInfo.channels;
 	auto expectedSamples = expectedInfo.frames * expectedInfo.channels;
@@ -135,6 +141,7 @@ void H2Test::checkAudioFilesDataEqual(const QString& sExpected, const QString& s
 	auto offset = 0LL;
 	sf_count_t toRead;
 	while ( samplesRead < totalSamples ) {
+		qDebug() << "H2Test::checkAudioFilesDataEqual 4.1";
 		short buf1[ BUFFER_SIZE ];
 		short buf2[ BUFFER_SIZE ];
 
@@ -159,6 +166,7 @@ void H2Test::checkAudioFilesDataEqual(const QString& sExpected, const QString& s
 			throw CppUnit::Exception( CppUnit::Message( "Short read or read error 2" ),
 									  sourceLine );
 		}
+		qDebug() << "H2Test::checkAudioFilesDataEqual 4.2";
 
 		for ( sf_count_t i = 0; i < toRead; ++i ) {
 			// Bit-precise floating point on all platforms is
@@ -195,8 +203,10 @@ void H2Test::checkAudioFilesDataEqual(const QString& sExpected, const QString& s
 			}
 					
 		}
+		qDebug() << "H2Test::checkAudioFilesDataEqual 4.3";
 
 		offset += toRead;
 		samplesRead += toRead;
 	}
+		qDebug() << "H2Test::checkAudioFilesDataEqual done";
 }

@@ -30,7 +30,7 @@
 class TransportTest : public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE( TransportTest );
 	// CPPUNIT_TEST( testFrameToTickConversion );
-	CPPUNIT_TEST( testTransportProcessing );
+	// CPPUNIT_TEST( testTransportProcessing );
 	// CPPUNIT_TEST( testTransportProcessingTimeline );
 	// CPPUNIT_TEST( testTransportRelocation );
 	// CPPUNIT_TEST( testLoopMode );
