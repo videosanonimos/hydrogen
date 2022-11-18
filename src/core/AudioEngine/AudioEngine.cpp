@@ -286,6 +286,8 @@ void AudioEngine::stopPlayback()
 
 void AudioEngine::reset( bool bWithJackBroadcast ) {
 	const auto pHydrogen = Hydrogen::get_instance();
+
+	DEBUGLOG( "");
 	
 	clearNoteQueues();
 	
@@ -345,7 +347,7 @@ float AudioEngine::getElapsedTime() const {
 void AudioEngine::locate( const double fTick, bool bWithJackBroadcast ) {
 	const auto pHydrogen = Hydrogen::get_instance();
 
-	// DEBUGLOG( QString( "fTick: %1" ).arg( fTick ) );
+	DEBUGLOG( QString( "fTick: %1" ).arg( fTick ) );
 
 #ifdef H2CORE_HAVE_JACK
 	// In case Hydrogen is using the JACK server to sync transport, it
@@ -374,7 +376,7 @@ void AudioEngine::locate( const double fTick, bool bWithJackBroadcast ) {
 
 void AudioEngine::locateToFrame( const long long nFrame ) {
 
-	// DEBUGLOG( QString( "nFrame: %1" ).arg( nFrame ) );
+	DEBUGLOG( QString( "nFrame: %1" ).arg( nFrame ) );
 	
 	resetOffsets();
 
@@ -435,13 +437,13 @@ void AudioEngine::incrementTransportPosition( uint32_t nFrames ) {
 	const double fNewTick = TransportPosition::computeTickFromFrame( nNewFrame );
 	m_pTransportPosition->m_fTickMismatch = 0;
 
-	// DEBUGLOG( QString( "nFrames: %1, old frame: %2, new frame: %3, old tick: %4, new tick: %5, ticksize: %6" )
-	// 		  .arg( nFrames )
-	// 		  .arg( m_pTransportPosition->getFrame() )
-	// 		  .arg( nNewFrame )
-	// 		  .arg( m_pTransportPosition->getDoubleTick(), 0, 'f' )
-	// 		  .arg( fNewTick, 0, 'f' )
-	// 		  .arg( m_pTransportPosition->getTickSize(), 0, 'f' ) );
+	DEBUGLOG( QString( "nFrames: %1, old frame: %2, new frame: %3, old tick: %4, new tick: %5, ticksize: %6" )
+			  .arg( nFrames )
+			  .arg( m_pTransportPosition->getFrame() )
+			  .arg( nNewFrame )
+			  .arg( m_pTransportPosition->getDoubleTick(), 0, 'f' )
+			  .arg( fNewTick, 0, 'f' )
+			  .arg( m_pTransportPosition->getTickSize(), 0, 'f' ) );
 	
 	updateTransportPosition( fNewTick, nNewFrame, m_pTransportPosition );
 
@@ -456,10 +458,10 @@ void AudioEngine::updateTransportPosition( double fTick, long long nFrame, std::
 
 	assert( pSong );
 	
-	// WARNINGLOG( QString( "[Before] fTick: %1, nFrame: %2, pos: %3" )
-	// 			.arg( fTick, 0, 'f' )
-	// 			.arg( nFrame )
-	// 			.arg( pPos->toQString( "", true ) ) );
+	WARNINGLOG( QString( "[Before] fTick: %1, nFrame: %2, pos: %3" )
+				.arg( fTick, 0, 'f' )
+				.arg( nFrame )
+				.arg( pPos->toQString( "", true ) ) );
 
 	if ( pHydrogen->getMode() == Song::Mode::Song ) {
 		updateSongTransportPosition( fTick, nFrame, pPos );
@@ -470,11 +472,11 @@ void AudioEngine::updateTransportPosition( double fTick, long long nFrame, std::
 
 	updateBpmAndTickSize( pPos );
 	
-	// WARNINGLOG( QString( "[After] fTick: %1, nFrame: %2, pos: %3, frame: %4" )
-	// 			.arg( fTick, 0, 'f' )
-	// 			.arg( nFrame )
-	// 			.arg( pPos->toQString( "", true ) )
-	// 			.arg( pPos->getFrame() ) );
+	WARNINGLOG( QString( "[After] fTick: %1, nFrame: %2, pos: %3, frame: %4" )
+				.arg( fTick, 0, 'f' )
+				.arg( nFrame )
+				.arg( pPos->toQString( "", true ) )
+				.arg( pPos->getFrame() ) );
 	
 }
 
@@ -622,15 +624,15 @@ void AudioEngine::updateBpmAndTickSize( std::shared_ptr<TransportPosition> pPos 
 	// arbitrary values.
 	pPos->setLastLeadLagFactor( 0 );
 
-	// DEBUGLOG(QString( "[%1] [%7,%8] sample rate: %2, tick size: %3 -> %4, bpm: %5 -> %6" )
-	// 		 .arg( pPos->getLabel() )
-	// 		 .arg( static_cast<float>(m_pAudioDriver->getSampleRate()))
-	// 		 .arg( fOldTickSize, 0, 'f' )
-	// 		 .arg( fNewTickSize, 0, 'f' )
-	// 		 .arg( fOldBpm, 0, 'f' )
-	// 		 .arg( pPos->getBpm(), 0, 'f' )
-	// 		 .arg( pPos->getFrame() )
-	// 		 .arg( pPos->getDoubleTick(), 0, 'f' ) );
+	DEBUGLOG(QString( "[%1] [%7,%8] sample rate: %2, tick size: %3 -> %4, bpm: %5 -> %6" )
+			 .arg( pPos->getLabel() )
+			 .arg( static_cast<float>(m_pAudioDriver->getSampleRate()))
+			 .arg( fOldTickSize, 0, 'f' )
+			 .arg( fNewTickSize, 0, 'f' )
+			 .arg( fOldBpm, 0, 'f' )
+			 .arg( pPos->getBpm(), 0, 'f' )
+			 .arg( pPos->getFrame() )
+			 .arg( pPos->getDoubleTick(), 0, 'f' ) );
 	
 	pPos->setTickSize( fNewTickSize );
 	
@@ -657,18 +659,18 @@ void AudioEngine::calculateTransportOffsetOnBpmChange( std::shared_ptr<Transport
 			nNewFrame + nNewLookahead ) + pPos->getTickMismatch();
 		pPos->setTickOffsetQueuing( fNewTickEnd - m_fLastTickEnd );
 
-		// DEBUGLOG( QString( "[%1 : [%2] timeline] old frame: %3, new frame: %4, tick: %5, nNewLookahead: %6, pPos->getFrameOffsetTempo(): %7, pPos->getTickOffsetQueuing(): %8, fNewTickEnd: %9, m_fLastTickEnd: %10" )
-		// 		  .arg( pPos->getLabel() )
-		// 		  .arg( Hydrogen::get_instance()->isTimelineEnabled() )
-		// 		  .arg( pPos->getFrame() )
-		// 		  .arg( nNewFrame )
-		// 		  .arg( pPos->getDoubleTick(), 0, 'f' )
-		// 		  .arg( nNewLookahead )
-		// 		  .arg( pPos->getFrameOffsetTempo() )
-		// 		  .arg( pPos->getTickOffsetQueuing(), 0, 'f' )
-		// 		  .arg( fNewTickEnd, 0, 'f' )
-		// 		  .arg( m_fLastTickEnd, 0, 'f' )
-		// 		  );
+		DEBUGLOG( QString( "[%1 : [%2] timeline] old frame: %3, new frame: %4, tick: %5, nNewLookahead: %6, pPos->getFrameOffsetTempo(): %7, pPos->getTickOffsetQueuing(): %8, fNewTickEnd: %9, m_fLastTickEnd: %10" )
+				  .arg( pPos->getLabel() )
+				  .arg( Hydrogen::get_instance()->isTimelineEnabled() )
+				  .arg( pPos->getFrame() )
+				  .arg( nNewFrame )
+				  .arg( pPos->getDoubleTick(), 0, 'f' )
+				  .arg( nNewLookahead )
+				  .arg( pPos->getFrameOffsetTempo() )
+				  .arg( pPos->getTickOffsetQueuing(), 0, 'f' )
+				  .arg( fNewTickEnd, 0, 'f' )
+				  .arg( m_fLastTickEnd, 0, 'f' )
+				  );
 		
 	}
 
@@ -1545,14 +1547,14 @@ void AudioEngine::updateSongSize() {
 	
 	const int nOldColumn = m_pTransportPosition->getColumn();
 
-	// WARNINGLOG( QString( "[Before] fNewStrippedTick: %1, fRepetitions: %2, m_fSongSizeInTicks: %3, fNewSongSizeInTicks: %4, transport: %5, queuing: %6" )
-	// 			.arg( fNewStrippedTick, 0, 'f' )
-	// 			.arg( fRepetitions )
-	// 			.arg( m_fSongSizeInTicks )
-	// 			.arg( fNewSongSizeInTicks )
-	// 			.arg( m_pTransportPosition->toQString( "", true ) )
-	// 			.arg( m_pQueuingPosition->toQString( "", true ) )
-	// 			);
+	WARNINGLOG( QString( "[Before] fNewStrippedTick: %1, fRepetitions: %2, m_fSongSizeInTicks: %3, fNewSongSizeInTicks: %4, transport: %5, queuing: %6" )
+				.arg( fNewStrippedTick, 0, 'f' )
+				.arg( fRepetitions )
+				.arg( m_fSongSizeInTicks )
+				.arg( fNewSongSizeInTicks )
+				.arg( m_pTransportPosition->toQString( "", true ) )
+				.arg( m_pQueuingPosition->toQString( "", true ) )
+				);
 
 	m_fSongSizeInTicks = fNewSongSizeInTicks;
 
@@ -1563,14 +1565,14 @@ void AudioEngine::updateSongSize() {
 		}
 		locate( 0 );
 		
-		// WARNINGLOG( QString( "[End of song reached] fNewStrippedTick: %1, fRepetitions: %2, m_fSongSizeInTicks: %3, fNewSongSizeInTicks: %4, transport: %5, queuing: %6" )
-		// 			.arg( fNewStrippedTick, 0, 'f' )
-		// 			.arg( fRepetitions )
-		// 			.arg( m_fSongSizeInTicks )
-		// 			.arg( fNewSongSizeInTicks )
-		// 			.arg( m_pTransportPosition->toQString( "", true ) )
-		// 			.arg( m_pQueuingPosition->toQString( "", true ) )
-		// 			);
+		WARNINGLOG( QString( "[End of song reached] fNewStrippedTick: %1, fRepetitions: %2, m_fSongSizeInTicks: %3, fNewSongSizeInTicks: %4, transport: %5, queuing: %6" )
+					.arg( fNewStrippedTick, 0, 'f' )
+					.arg( fRepetitions )
+					.arg( m_fSongSizeInTicks )
+					.arg( fNewSongSizeInTicks )
+					.arg( m_pTransportPosition->toQString( "", true ) )
+					.arg( m_pQueuingPosition->toQString( "", true ) )
+					);
 		
 		EventQueue::get_instance()->push_event( EVENT_SONG_SIZE_CHANGED, 0 );
 	};
@@ -1598,9 +1600,9 @@ void AudioEngine::updateSongSize() {
 		// enlarged, or shrunk. We need to compensate this in order to
 		// keep the current pattern tick position constant.
 
-		// DEBUGLOG( QString( "[nPatternStartTick mismatch] old: %1, new: %2" )
-		// 		  .arg( m_pTransportPosition->getPatternStartTick() )
-		// 		  .arg( nNewPatternStartTick ) );
+		DEBUGLOG( QString( "[nPatternStartTick mismatch] old: %1, new: %2" )
+				  .arg( m_pTransportPosition->getPatternStartTick() )
+				  .arg( nNewPatternStartTick ) );
 		
 		fNewStrippedTick +=
 			static_cast<double>(nNewPatternStartTick -
@@ -1646,19 +1648,19 @@ void AudioEngine::updateSongSize() {
 		nNewFrame - m_pTransportPosition->getFrame() +
 		m_pTransportPosition->getFrameOffsetTempo() );
 		
-	// INFOLOG(QString( "[update] nNewFrame: %1, m_pTransportPosition->getFrame() (old): %2, m_pTransportPosition->getFrameOffsetTempo(): %3, fNewTick: %4, m_pTransportPosition->getDoubleTick() (old): %5, m_pTransportPosition->getTickOffsetSongSize() : %6, tick offset (without rounding): %7, fNewSongSizeInTicks: %8, fRepetitions: %9, fNewStrippedTick: %10, nNewPatternStartTick: %11")
-	// 		.arg( nNewFrame )
-	// 		.arg( m_pTransportPosition->getFrame() )
-	// 		.arg( m_pTransportPosition->getFrameOffsetTempo() )
-	// 		.arg( fNewTick, 0, 'g', 30 )
-	// 		.arg( m_pTransportPosition->getDoubleTick(), 0, 'g', 30 )
-	// 		.arg( m_pTransportPosition->getTickOffsetSongSize(), 0, 'g', 30 )
-	// 		.arg( fNewTick - m_pTransportPosition->getDoubleTick(), 0, 'g', 30 )
-	// 		.arg( fNewSongSizeInTicks, 0, 'g', 30 )
-	// 		.arg( fRepetitions, 0, 'f' )
-	// 		.arg( fNewStrippedTick, 0, 'f' )
-	// 		.arg( nNewPatternStartTick )
-	// 		);
+	INFOLOG(QString( "[update] nNewFrame: %1, m_pTransportPosition->getFrame() (old): %2, m_pTransportPosition->getFrameOffsetTempo(): %3, fNewTick: %4, m_pTransportPosition->getDoubleTick() (old): %5, m_pTransportPosition->getTickOffsetSongSize() : %6, tick offset (without rounding): %7, fNewSongSizeInTicks: %8, fRepetitions: %9, fNewStrippedTick: %10, nNewPatternStartTick: %11")
+			.arg( nNewFrame )
+			.arg( m_pTransportPosition->getFrame() )
+			.arg( m_pTransportPosition->getFrameOffsetTempo() )
+			.arg( fNewTick, 0, 'g', 30 )
+			.arg( m_pTransportPosition->getDoubleTick(), 0, 'g', 30 )
+			.arg( m_pTransportPosition->getTickOffsetSongSize(), 0, 'g', 30 )
+			.arg( fNewTick - m_pTransportPosition->getDoubleTick(), 0, 'g', 30 )
+			.arg( fNewSongSizeInTicks, 0, 'g', 30 )
+			.arg( fRepetitions, 0, 'f' )
+			.arg( fNewStrippedTick, 0, 'f' )
+			.arg( nNewPatternStartTick )
+			);
 
 	const auto fOldTickSize = m_pTransportPosition->getTickSize();
 	updateTransportPosition( fNewTick, nNewFrame, m_pTransportPosition );
@@ -1698,14 +1700,14 @@ void AudioEngine::updateSongSize() {
 		return;
 	}
 
-	// WARNINGLOG( QString( "[After] fNewTick: %1, fRepetitions: %2, m_fSongSizeInTicks: %3, fNewSongSizeInTicks: %4, transport: %5, queuing: %6" )
-	// 			.arg( fNewTick, 0, 'g', 30 )
-	// 			.arg( fRepetitions, 0, 'f' )
-	// 			.arg( m_fSongSizeInTicks )
-	// 			.arg( fNewSongSizeInTicks )
-	// 			.arg( m_pTransportPosition->toQString( "", true ) )
-	// 			.arg( m_pQueuingPosition->toQString( "", true ) )
-	// 			);
+	WARNINGLOG( QString( "[After] fNewTick: %1, fRepetitions: %2, m_fSongSizeInTicks: %3, fNewSongSizeInTicks: %4, transport: %5, queuing: %6" )
+				.arg( fNewTick, 0, 'g', 30 )
+				.arg( fRepetitions, 0, 'f' )
+				.arg( m_fSongSizeInTicks )
+				.arg( fNewSongSizeInTicks )
+				.arg( m_pTransportPosition->toQString( "", true ) )
+				.arg( m_pQueuingPosition->toQString( "", true ) )
+				);
 	
 	EventQueue::get_instance()->push_event( EVENT_SONG_SIZE_CHANGED, 0 );
 }
@@ -1736,7 +1738,7 @@ void AudioEngine::updatePlayingPatternsPos( std::shared_ptr<TransportPosition> p
 	auto pSong = pHydrogen->getSong();
 	auto pPlayingPatterns = pPos->getPlayingPatterns();
 
-	// DEBUGLOG( QString( "pre: %1" ).arg( pPos->toQString() ) );
+	DEBUGLOG( QString( "pre: %1" ).arg( pPos->toQString() ) );
 
 	if ( pHydrogen->getMode() == Song::Mode::Song ) {
 
@@ -1831,7 +1833,7 @@ void AudioEngine::updatePlayingPatternsPos( std::shared_ptr<TransportPosition> p
 		pPos->setPatternSize( MAX_NOTES );
 	}
 	
-	// DEBUGLOG( QString( "post: %1" ).arg( pPos->toQString() ) );
+	DEBUGLOG( QString( "post: %1" ).arg( pPos->toQString() ) );
 	
 }
 
@@ -1898,9 +1900,9 @@ void AudioEngine::flushAndAddNextPattern( int nPatternNumber ) {
 
 void AudioEngine::handleTimelineChange() {
 
-	// INFOLOG( QString( "before:\n%1\n%2" )
-	// 		 .arg( m_pTransportPosition->toQString() )
-	// 		 .arg( m_pQueuingPosition->toQString() ) );
+	INFOLOG( QString( "before:\n%1\n%2" )
+			 .arg( m_pTransportPosition->toQString() )
+			 .arg( m_pQueuingPosition->toQString() ) );
 
 	const auto fOldTickSize = m_pTransportPosition->getTickSize();
 	updateBpmAndTickSize( m_pTransportPosition );
@@ -1915,9 +1917,9 @@ void AudioEngine::handleTimelineChange() {
 		calculateTransportOffsetOnBpmChange( m_pTransportPosition );
 	}
 	
-	// INFOLOG( QString( "after:\n%1\n%2" )
-	// 		 .arg( m_pTransportPosition->toQString() )
-	// 		 .arg( m_pQueuingPosition->toQString() ) );
+	INFOLOG( QString( "after:\n%1\n%2" )
+			 .arg( m_pTransportPosition->toQString() )
+			 .arg( m_pQueuingPosition->toQString() ) );
 }
 
 void AudioEngine::handleTempoChange() {
@@ -2081,20 +2083,20 @@ long long AudioEngine::computeTickInterval( double* fTickStart, double* fTickEnd
 	*fTickEnd = TransportPosition::computeTickFromFrame( nFrameEnd ) -
 		pPos->getTickOffsetQueuing();
 
-	// INFOLOG( QString( "nFrame: [%1,%2], fTick: [%3, %4], fTick (without offset): [%5,%6], m_pTransportPosition->getTickOffsetQueuing(): %7, nLookahead: %8, nIntervalLengthInFrames: %9, m_pTransportPosition: %10, m_pQueuingPosition: %11,_bLookaheadApplied: %12" )
-	// 		 .arg( nFrameStart )
-	// 		 .arg( nFrameEnd )
-	// 		 .arg( *fTickStart, 0, 'f' )
-	// 		 .arg( *fTickEnd, 0, 'f' )
-	// 		 .arg( TransportPosition::computeTickFromFrame( nFrameStart ), 0, 'f' )
-	// 		 .arg( TransportPosition::computeTickFromFrame( nFrameEnd ), 0, 'f' )
-	// 		 .arg( pPos->getTickOffsetQueuing(), 0, 'f' )
-	// 		 .arg( nLookahead )
-	// 		 .arg( nIntervalLengthInFrames )
-	// 		 .arg( pPos->toQString() )
-	// 		 .arg( m_pQueuingPosition->toQString() )
-	// 		 .arg( m_bLookaheadApplied )
-	// 		 );
+	INFOLOG( QString( "nFrame: [%1,%2], fTick: [%3, %4], fTick (without offset): [%5,%6], m_pTransportPosition->getTickOffsetQueuing(): %7, nLookahead: %8, nIntervalLengthInFrames: %9, m_pTransportPosition: %10, m_pQueuingPosition: %11,_bLookaheadApplied: %12" )
+			 .arg( nFrameStart )
+			 .arg( nFrameEnd )
+			 .arg( *fTickStart, 0, 'f' )
+			 .arg( *fTickEnd, 0, 'f' )
+			 .arg( TransportPosition::computeTickFromFrame( nFrameStart ), 0, 'f' )
+			 .arg( TransportPosition::computeTickFromFrame( nFrameEnd ), 0, 'f' )
+			 .arg( pPos->getTickOffsetQueuing(), 0, 'f' )
+			 .arg( nLookahead )
+			 .arg( nIntervalLengthInFrames )
+			 .arg( pPos->toQString() )
+			 .arg( m_pQueuingPosition->toQString() )
+			 .arg( m_bLookaheadApplied )
+			 );
 
 	return nLeadLagFactor;
 }
@@ -2165,13 +2167,13 @@ int AudioEngine::updateNoteQueue( unsigned nIntervalLengthInFrames )
 	// up.
 	m_fLastTickEnd = fTickEndComp;
 
-	// WARNINGLOG( QString( "tick interval (floor): [%1,%2], tick interval (computed): [%3,%4], nLeadLagFactor: %5, m_fSongSizeInTicks: %6, m_pTransportPosition: %7, m_pQueuingPosition: %8")
-	// 			.arg( nTickStart ).arg( nTickEnd )
-	// 			.arg( fTickStartComp, 0, 'f' ).arg( fTickEndComp, 0, 'f' )
-	// 			.arg( nLeadLagFactor )
-	// 			.arg( m_fSongSizeInTicks, 0, 'f' )
-	// 			.arg( m_pTransportPosition->toQString() )
-	// 			.arg( m_pQueuingPosition->toQString() ) );
+	WARNINGLOG( QString( "tick interval (floor): [%1,%2], tick interval (computed): [%3,%4], nLeadLagFactor: %5, m_fSongSizeInTicks: %6, m_pTransportPosition: %7, m_pQueuingPosition: %8")
+				.arg( nTickStart ).arg( nTickEnd )
+				.arg( fTickStartComp, 0, 'f' ).arg( fTickEndComp, 0, 'f' )
+				.arg( nLeadLagFactor )
+				.arg( m_fSongSizeInTicks, 0, 'f' )
+				.arg( m_pTransportPosition->toQString() )
+				.arg( m_pQueuingPosition->toQString() ) );
 
 	// We loop over integer ticks to ensure that all notes encountered
 	// between two iterations belong to the same pattern.
