@@ -296,12 +296,13 @@ void* diskWriterDriver_thread( void* param )
 		
 		// this progress bar method is not exact but ok enough to give users a usable visible progress feedback
 		float fPercent = ( float )(patternPosition +1) / ( float )nColumns * 100.0;
-		EventQueue::get_instance()->push_event( EVENT_PROGRESS, ( int )fPercent );
+		EventQueue::get_instance()->push_event(
+			EVENT_PROGRESS, static_cast<int>(std::ceil( fPercent )) );
 		qDebug() << "diskWriterDriver_thread progress: patternPosition: "
 				 << patternPosition
 				 << ", nColumns: " << nColumns
 				 << ", fPercent: " << fPercent
-				 << ", (int)fPercent: " << (int)fPercent;
+				 << ", rounded fPercent: " << static_cast<int>(std::ceil( fPercent ) );
 	}
 	delete[] pData;
 	pData = nullptr;
