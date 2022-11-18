@@ -66,8 +66,8 @@ environment:
     #   LIBSSL: libssl-1_1-x64.dll
     #   LIBCRYPTO: libcrypto-1_1-x64.dll
 
-      CHOCO_ARCH:
-      PROGRAM_FILES: "Program Files"
+      # CHOCO_ARCH:
+      # PROGRAM_FILES: "Program Files"
 
     - job_name: 'Windows32'
       job_group: 'Windows'
