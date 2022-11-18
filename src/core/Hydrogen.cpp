@@ -707,18 +707,13 @@ bool Hydrogen::startExportSession( int nSampleRate, int nSampleDepth )
 void Hydrogen::startExportSong( const QString& filename)
 {
 	AudioEngine* pAudioEngine = m_pAudioEngine;
-	qDebug() << "Hydrogen::startExportSong 0";
 	getCoreActionController()->locateToTick( 0 );
-	qDebug() << "Hydrogen::startExportSong 1";
 	pAudioEngine->play();
 	pAudioEngine->getSampler()->stopPlayingNotes();
-	qDebug() << "Hydrogen::startExportSong 2";
 
 	DiskWriterDriver* pDiskWriterDriver = static_cast<DiskWriterDriver*>(pAudioEngine->getAudioDriver());
 	pDiskWriterDriver->setFileName( filename );
-	qDebug() << "Hydrogen::startExportSong 3";
 	pDiskWriterDriver->write();
-	qDebug() << "Hydrogen::startExportSong done";
 }
 
 void Hydrogen::stopExportSong()

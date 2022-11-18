@@ -60,8 +60,6 @@ void* diskWriterDriver_thread( void* param )
 
 	auto pAudioEngine = Hydrogen::get_instance()->getAudioEngine();
 
-	qDebug() << "diskWriterDriver_thread 0";
-	
 	__INFOLOG( "DiskWriterDriver thread start" );
 
 	// always rolling, no user interaction
@@ -95,8 +93,6 @@ void* diskWriterDriver_thread( void* param )
 	if( pDriver->m_nSampleDepth == 32 ){
 		bits = 0x0004; ////Signed 32 bit data
 	}
-	qDebug() << "diskWriterDriver_thread 1";
-
 	soundInfo.format =  sfformat|bits;
 
 //	#ifdef HAVE_OGGVORBIS
@@ -151,8 +147,6 @@ void* diskWriterDriver_thread( void* param )
 
 	float *pData_L = pDriver->m_pOut_L;
 	float *pData_R = pDriver->m_pOut_R;
-	qDebug() << "diskWriterDriver_thread 2";
-
 
 	Hydrogen* pHydrogen = Hydrogen::get_instance();
 	auto pSong = pHydrogen->getSong();
@@ -167,7 +161,6 @@ void* diskWriterDriver_thread( void* param )
 	int nMaxNumberOfSilentFrames = 200;
 	for ( int patternPosition = 0; patternPosition < nColumns; ++patternPosition ) {
 
-		qDebug() << "diskWriterDriver_thread 3.1 : " << patternPosition;
 		PatternList *pColumn = ( *pPatternColumns )[ patternPosition ];
 		if ( pColumn->size() != 0 ) {
 			nPatternSize = pColumn->longest_pattern_length();
@@ -194,9 +187,6 @@ void* diskWriterDriver_thread( void* param )
 				  ( nFrameNumber < nPatternLengthInFrames ||
 					pSampler->isRenderingNotes() ) ) ) {
 			
-			qDebug() << "diskWriterDriver_thread 3.2 : " << patternPosition
-					 << " : nFrameNumber: " << nFrameNumber;
-			
 			int nUsedBuffer = pDriver->m_nBufferSize;
 			
 			// This will calculate the size from -last- (end of
@@ -216,10 +206,6 @@ void* diskWriterDriver_thread( void* param )
 			while( ret == 2 ) {
 				ret = pDriver->m_processCallback( nUsedBuffer, nullptr );
 			}
-
-			qDebug() << "diskWriterDriver_thread 3.3 : " << patternPosition
-					 << " : nFrameNumber: " << nFrameNumber;
-
 
 			if ( patternPosition == nColumns - 1 &&
 				 nPatternLengthInFrames - nFrameNumber < nUsedBuffer ) {
@@ -275,16 +261,11 @@ void* diskWriterDriver_thread( void* param )
 					pData[ ii * 2 + 1 ] = pData_R[ ii ];
 				}
 			}
-			qDebug() << "diskWriterDriver_thread 3.4 : " << patternPosition
-					 << " : nFrameNumber: " << nFrameNumber;
-						
 			
 			int res = sf_writef_float( m_file, pData, nBufferWriteLength );
 			if ( res != ( int )nBufferWriteLength ) {
 				__ERRORLOG( "Error during sf_write_float" );
 			}
-			qDebug() << "diskWriterDriver_thread 3.5 : " << patternPosition
-					 << " : nFrameNumber: " << nFrameNumber;
 
 			// Sampler is still rendering notes put we seem to have
 			// reached the zero padding at the end of the
@@ -298,24 +279,14 @@ void* diskWriterDriver_thread( void* param )
 		float fPercent = ( float )(patternPosition +1) / ( float )nColumns * 100.0;
 		EventQueue::get_instance()->push_event(
 			EVENT_PROGRESS, static_cast<int>(std::ceil( fPercent )) );
-		qDebug() << "diskWriterDriver_thread progress: patternPosition: "
-				 << patternPosition
-				 << ", nColumns: " << nColumns
-				 << ", fPercent: " << fPercent
-				 << ", rounded fPercent: " << static_cast<int>(std::ceil( fPercent ) );
 	}
 	delete[] pData;
 	pData = nullptr;
 
-	qDebug() << "diskWriterDriver_thread 4";
-
 	sf_close( m_file );
-	qDebug() << "diskWriterDriver_thread 5";
-
 	__INFOLOG( "DiskWriterDriver thread end" );
 
 	pthread_exit( nullptr );
-	qDebug() << "diskWriterDriver_thread done";
 	return nullptr;
 }
 
@@ -359,12 +330,10 @@ void DiskWriterDriver::write()
 {
 	INFOLOG( "" );
 
-	qDebug() << "DiskWriterDriver::write 0";
 	pthread_attr_t attr;
 	pthread_attr_init( &attr );
 
 	pthread_create( &diskWriterDriverThread, &attr, diskWriterDriver_thread, this );
-	qDebug() << "DiskWriterDriver::write done";
 }
 
 /// disconnect
