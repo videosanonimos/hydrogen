@@ -659,7 +659,7 @@ void AudioEngine::calculateTransportOffsetOnBpmChange( std::shared_ptr<Transport
 			nNewFrame + nNewLookahead ) + pPos->getTickMismatch();
 		pPos->setTickOffsetQueuing( fNewTickEnd - m_fLastTickEnd );
 
-		DEBUGLOG( QString( "[%1 : [%2] timeline] old frame: %3, new frame: %4, tick: %5, nNewLookahead: %6, pPos->getFrameOffsetTempo(): %7, pPos->getTickOffsetQueuing(): %8, fNewTickEnd: %9, m_fLastTickEnd: %10" )
+		DEBUGLOG( QString( "[%1 : [%2] timeline] old frame: %3, new frame: %4, tick: %5, nNewLookahead: %6, pPos->getFrameOffsetTempo(): %7, pPos->getTickOffsetQueuing(): %8, fNewTickEnd: %9, m_fLastTickEnd: %10, AudioEngine::nMaxTimeHumanize: %11" )
 				  .arg( pPos->getLabel() )
 				  .arg( Hydrogen::get_instance()->isTimelineEnabled() )
 				  .arg( pPos->getFrame() )
@@ -670,6 +670,7 @@ void AudioEngine::calculateTransportOffsetOnBpmChange( std::shared_ptr<Transport
 				  .arg( pPos->getTickOffsetQueuing(), 0, 'f' )
 				  .arg( fNewTickEnd, 0, 'f' )
 				  .arg( m_fLastTickEnd, 0, 'f' )
+				  .arg( AudioEngine::nMaxTimeHumanize )
 				  );
 		
 	}
@@ -2413,17 +2414,21 @@ double AudioEngine::getLeadLagInTicks() {
 }
 
 long long AudioEngine::getLeadLagInFrames( double fTick ) {
-	double fTmp;
+	double fTmp, fTmp2;
 	const long long nFrameStart =
 		TransportPosition::computeFrameFromTick( fTick, &fTmp );
 	const long long nFrameEnd =
 		TransportPosition::computeFrameFromTick( fTick +
 												 AudioEngine::getLeadLagInTicks(),
-												 &fTmp );
+												 &fTmp2 );
 
-	// WARNINGLOG( QString( "nFrameStart: %1, nFrameEnd: %2, diff: %3, fTick: %4" )
-	// 			.arg( nFrameStart ).arg( nFrameEnd )
-	// 			.arg( nFrameEnd - nFrameStart ).arg( fTick, 0, 'f' ) );
+	WARNINGLOG( QString( "nFrameStart: %1, nFrameEnd: %2, diff: %3, fTick: %4, fTmp: %5, fTmp2: %6, AudioEngine::getLeadLagInTicks(): %7" )
+				.arg( nFrameStart ).arg( nFrameEnd )
+				.arg( nFrameEnd - nFrameStart )
+				.arg( fTick, 0, 'g', 30 )
+				.arg( fTmp, 0, 'E', -1 ).arg( fTmp2, 0, 'E', -1 )
+				.arg( AudioEngine::getLeadLagInTicks(), 0, 'f' )
+		);
 
 	return nFrameEnd - nFrameStart;
 }
