@@ -610,7 +610,7 @@ void AudioEngine::updateBpmAndTickSize( std::shared_ptr<TransportPosition> pPos 
 #ifndef WIN32
 	if ( fNewTickSize == fOldTickSize ) {
 #else
-	if ( std::abs( fNewTickSize - fOldTickSize ) < 1e-11 ) {
+	if ( std::abs( fNewTickSize - fOldTickSize ) < 1e-7 ) {
 #endif
 		return;
 	}
