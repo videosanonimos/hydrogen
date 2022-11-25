@@ -609,11 +609,25 @@ void AudioEngine::updateBpmAndTickSize( std::shared_ptr<TransportPosition> pPos 
 	// Nothing changed - avoid recomputing
 #ifndef WIN32
 	if ( fNewTickSize == fOldTickSize ) {
-#else
-	if ( std::abs( fNewTickSize - fOldTickSize ) < 1e-7 ) {
-#endif
 		return;
 	}
+#else
+	if ( std::abs( fNewTickSize - fOldTickSize ) < 1e-7 ) {
+		return;
+	} else {
+		qDebug() << QString( "Mismatching tick sizes: [%1] -> [%2] (diff: %3), equality: %4, comp (e-12): %5, comp (e-9): %6, comp (e-7): %7, comp (e-4): %8, comp (e-1): %9, comp (e-0): %10" )
+			.arg( fOldTickSize, 0, 'g', 30 )
+			.arg( fNewTickSize, 0, 'g', 30 )
+			.arg( std::abs( fNewTickSize - fOldTickSize ), 0, 'E' )
+			.arg( fNewTickSize == fOldTickSize )
+			.arg( std::abs( fNewTickSize - fOldTickSize ) < 1e-12 )
+			.arg( std::abs( fNewTickSize - fOldTickSize ) < 1e-9 )
+			.arg( std::abs( fNewTickSize - fOldTickSize ) < 1e-7 )
+			.arg( std::abs( fNewTickSize - fOldTickSize ) < 1e-4 )
+			.arg( std::abs( fNewTickSize - fOldTickSize ) < 1e-1 )
+			.arg( std::abs( fNewTickSize - fOldTickSize ) < 1e-0 );
+	}
+#endif
 	
 
 	if ( fNewTickSize == 0 ) {
