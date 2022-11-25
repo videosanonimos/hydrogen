@@ -612,7 +612,7 @@ void AudioEngine::updateBpmAndTickSize( std::shared_ptr<TransportPosition> pPos 
 		return;
 	}
 #else
-	if ( std::abs( fNewTickSize - fOldTickSize ) < 1e-4 ) {
+	if ( std::abs( fNewTickSize - fOldTickSize ) < 1e-2 ) {
 		return;
 	} else {
 		qDebug() << QString( "Mismatching tick sizes: [%1] -> [%2] (diff: %3), equality: %4, comp (e-12): %5, comp (e-9): %6, comp (e-7): %7, comp (e-4): %8, comp (e-1): %9, comp (e-0): %10" )
@@ -1695,7 +1695,7 @@ void AudioEngine::updateSongSize() {
 #ifndef WIN32
 	if ( fOldTickSize == m_pTransportPosition->getTickSize() ) {
 #else
-	if ( std::abs( fOldTickSize - m_pTransportPosition->getTickSize() ) < 1e-4 ) {
+	if ( std::abs( fOldTickSize - m_pTransportPosition->getTickSize() ) < 1e-2 ) {
 #endif
 		calculateTransportOffsetOnBpmChange( m_pTransportPosition );
 	}
@@ -1939,7 +1939,7 @@ void AudioEngine::handleTimelineChange() {
 #ifndef WIN32
 	if ( fOldTickSize == m_pTransportPosition->getTickSize() ) {
 #else
-	if ( std::abs( fOldTickSize - m_pTransportPosition->getTickSize() ) < 1e-4 ) {
+	if ( std::abs( fOldTickSize - m_pTransportPosition->getTickSize() ) < 1e-2 ) {
 #endif
 		// As tempo did not change during the Timeline activation, no
 		// update of the offsets took place. This, however, is not
