@@ -59,6 +59,7 @@ environment:
       job_group: 'Windows'
       MSYS: 'C:\msys64\mingw64'
       MSYS_REPO: 'mingw64/mingw-w64-x86_64'
+      MSYS_PREFIX: 'mingw-w64-x86_64'
       BUILD_TYPE: "Release"
       CMAKE_FLAGS: "-DWANT_DEBUG:BOOL=OFF -DWIN64:BOOL=ON"
       appveyor_build_worker_image: Visual Studio 2019
@@ -69,6 +70,7 @@ environment:
       job_group: 'Windows'
       MSYS: 'C:\msys64\mingw32'
       MSYS_REPO: 'mingw32/mingw-w64-i686'
+      MSYS_PREFIX: 'mingw-w64-i686'
       BUILD_TYPE: "Release"
       CMAKE_FLAGS: "-DWANT_DEBUG:BOOL=OFF -DWIN64:BOOL=OFF"
       appveyor_build_worker_image: Visual Studio 2019
@@ -307,8 +309,8 @@ for:
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-jack2
 
           REM *** Install an openssl version compatible with Qt5 ***
-          c:\msys64\usr\bin\wget https://repo.msys2.org/mingw/mingw64/%MSYS_REPO%-openssl-1.1.1.n-1-any.pkg.tar.zst
-          c:\msys64\usr\bin\pacman --noconfirm -U %MSYS_REPO%-openssl-1.1.1.n-1-any.pkg.tar.zst
+          c:\msys64\usr\bin\wget https://repo.msys2.org/mingw/%MSYS_REPO%-openssl-1.1.1.n-1-any.pkg.tar.zst
+          c:\msys64\usr\bin\pacman --noconfirm -U %MSYS_PREFIX%-openssl-1.1.1.n-1-any.pkg.tar.zst
 
           ccache -M 256M
           ccache -s
