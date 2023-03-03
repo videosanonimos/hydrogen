@@ -62,8 +62,8 @@ environment:
       BUILD_TYPE: "Release"
       CMAKE_FLAGS: "-DWANT_DEBUG:BOOL=OFF -DWIN64:BOOL=ON"
       appveyor_build_worker_image: Visual Studio 2019
-      LIBSSL: libssl-3-x64.dll
-      LIBCRYPTO: libcrypto-3-x64.dll
+      LIBSSL: libssl-1_1-x64.dll
+      LIBCRYPTO: libcrypto-1_1-x64.dll
 
     - job_name: 'Windows32'
       job_group: 'Windows'
@@ -72,8 +72,8 @@ environment:
       BUILD_TYPE: "Release"
       CMAKE_FLAGS: "-DWANT_DEBUG:BOOL=OFF -DWIN64:BOOL=OFF"
       appveyor_build_worker_image: Visual Studio 2019
-      LIBSSL: libssl-3.dll
-      LIBCRYPTO: libcrypto-3.dll
+      LIBSSL: libssl-1_1.dll
+      LIBCRYPTO: libcrypto-1_1.dll
 
 build:
   verbosity: detailed
@@ -305,6 +305,10 @@ for:
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ladspa-sdk
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-ccache
           c:\msys64\usr\bin\pacman --noconfirm -S -q %MSYS_REPO%-jack2
+
+          REM *** Install an openssl version compatible with Qt5 ***
+          c:\msys64\usr\bin\wget https://repo.msys2.org/mingw/mingw64/%MSYS_REPO%-openssl-1.1.1.n-1-any.pkg.tar.zst
+          c:\msys64\usr\bin\pacman --noconfirm -U %MSYS_REPO%-openssl-1.1.1.n-1-any.pkg.tar.zst
 
           ccache -M 256M
           ccache -s
