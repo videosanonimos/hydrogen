@@ -47,13 +47,13 @@ environment:
   TARGET_VERSION: '1.2.0'
   matrix:
 
-    - job_name: 'Ubuntu 20.04'
-      job_group: 'Linux'
-      appveyor_build_worker_image: Ubuntu2004
+    # - job_name: 'Ubuntu 20.04'
+    #   job_group: 'Linux'
+    #   appveyor_build_worker_image: Ubuntu2004
 
-    - job_name: 'OS X'
-      job_group: 'Mac OS X'
-      appveyor_build_worker_image: macos
+    # - job_name: 'OS X'
+    #   job_group: 'Mac OS X'
+    #   appveyor_build_worker_image: macos
 
     - job_name: 'Windows64'
       job_group: 'Windows'
@@ -353,6 +353,8 @@ for:
           %PYTHON% %APPVEYOR_BUILD_FOLDER%\windows\ci\copy_thirdparty_dlls.py --no-overwrite -V info -L %MSYS%\bin -d %APPVEYOR_BUILD_FOLDER%\build\windows\extralibs src/gui/hydrogen.exe src/core/libhydrogen-core-%TARGET_VERSION%.dll
 
           REM *** libcrypto and libssl are not picked up by the Python script above and needs to be copied manually ***
+          dir %MSYS%
+          dir %MSYS%\bin
           copy %MSYS%\bin\%LIBSSL% %APPVEYOR_BUILD_FOLDER%\build\windows\extralibs
           copy %MSYS%\bin\%LIBCRYPTO% %APPVEYOR_BUILD_FOLDER%\build\windows\extralibs
 
