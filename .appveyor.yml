@@ -85,10 +85,11 @@ matrix:
 
 # Upload artifacts in case either the branch is named *-artifacts or
 # HEAD is located on a tag.
-init: |-
-  if [ $APPVEYOR_REPO_TAG ] || [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts"* ]; then
-      UPLOAD_ARTIFACTS=true;
-  fi
+init:
+  - sh: |-
+      if [ $APPVEYOR_REPO_TAG ] || [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts"* ]; then
+          UPLOAD_ARTIFACTS=true;
+      fi
 
 for:
   - 
