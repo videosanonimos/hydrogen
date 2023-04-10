@@ -88,7 +88,7 @@ matrix:
 init:
   - sh: |-
       echo $UPLOAD_ARTIFACTS
-      if [ $APPVEYOR_REPO_TAG ]; then
+      if [ "$APPVEYOR_REPO_TAG" == "true" ]; then
           echo "1"
           UPLOAD_ARTIFACTS=true
       fi
@@ -96,7 +96,7 @@ init:
           echo "2"
           UPLOAD_ARTIFACTS=true
       fi
-      if [ $APPVEYOR_REPO_TAG ] || [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts" ]; then
+      if [ "$APPVEYOR_REPO_TAG" == "true" ] || [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts" ]; then
           echo "3"
           UPLOAD_ARTIFACTS=true
       fi
@@ -311,7 +311,7 @@ for:
           echo %UPLOAD_ARTIFACTS%
 
           if not "%APPVEYOR_REPO_BRANCH%"=="%APPVEYOR_REPO_BRANCH:-artifacts=%" set UPLOAD_ARTIFACTS="true"
-          if %APPVEYOR_REPO_TAG%  set UPLOAD_ARTIFACTS="true"
+          if %APPVEYOR_REPO_TAG%=="true"  set UPLOAD_ARTIFACTS="true"
 
           echo %APPVEYOR_REPO_TAG%
           echo %APPVEYOR_REPO_BRANCH%
