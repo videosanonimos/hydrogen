@@ -87,8 +87,18 @@ matrix:
 # HEAD is located on a tag.
 init:
   - sh: |-
-      if [ $APPVEYOR_REPO_TAG ] || [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts"* ]; then
-          UPLOAD_ARTIFACTS=true;
+      echo $UPLOAD_ARTIFACTS
+      if [ $APPVEYOR_REPO_TAG ]; then
+          echo "1"
+          UPLOAD_ARTIFACTS=true
+      fi
+      if [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts" ]; then
+          echo "2"
+          UPLOAD_ARTIFACTS=true
+      fi
+      if [ $APPVEYOR_REPO_TAG ] || [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts" ]; then
+          echo "3"
+          UPLOAD_ARTIFACTS=true
       fi
 
       echo $APPVEYOR_REPO_TAG
@@ -296,6 +306,13 @@ for:
       cmd: |-
 
         
+          echo %APPVEYOR_REPO_TAG%
+          echo %APPVEYOR_REPO_BRANCH%
+          echo %UPLOAD_ARTIFACTS%
+
+          if not "%APPVEYOR_REPO_BRANCH%"=="%APPVEYOR_REPO_BRANCH:-artifacts=%" set UPLOAD_ARTIFACTS="true"
+          if %APPVEYOR_REPO_TAG%  set UPLOAD_ARTIFACTS="true"
+
           echo %APPVEYOR_REPO_TAG%
           echo %APPVEYOR_REPO_BRANCH%
           echo %UPLOAD_ARTIFACTS%
