@@ -91,6 +91,10 @@ init:
           UPLOAD_ARTIFACTS=true;
       fi
 
+      echo $APPVEYOR_REPO_TAG
+      echo $APPVEYOR_REPO_BRANCH
+      echo $UPLOAD_ARTIFACTS
+
 for:
   - 
     matrix:
@@ -290,6 +294,11 @@ for:
     cache: '%USERPROFILE%\AppData\Roaming\ccache'
     before_build:
       cmd: |-
+
+        
+          echo %APPVEYOR_REPO_TAG%
+          echo %APPVEYOR_REPO_BRANCH%
+          echo %UPLOAD_ARTIFACTS%
 
           if not %UPLOAD_ARTIFACTS%=="true" if %job_name%==Windows32 appveyor exit
 
