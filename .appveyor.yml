@@ -44,6 +44,7 @@
 environment:
   GENERATOR: "MinGW Makefiles"
   APPVEYOR_REPO_TAG: true
+  APPVEYOR_REPO_TAG_NAME: 'jens peter'
   UPLOAD_ARTIFACTS: false
   TARGET_VERSION: '1.2.0'
   matrix:
@@ -89,15 +90,15 @@ matrix:
 init:
   - sh: |-
       echo $UPLOAD_ARTIFACTS
-      if [ "$APPVEYOR_REPO_TAG" == "true" ]; then
+      if [[ -v APPVEYOR_REPO_TAG_NAME ]]; then
           echo "1"
           UPLOAD_ARTIFACTS=true
       fi
-      if [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts" ]; then
+      if [[ "$APPVEYOR_REPO_BRANCH" == *"-artifacts" ]]; then
           echo "2"
           UPLOAD_ARTIFACTS=true
       fi
-      if [ "$APPVEYOR_REPO_TAG" == "true" ] || [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts" ]; then
+      if [[ -v APPVEYOR_REPO_TAG_NAME || "$APPVEYOR_REPO_BRANCH" == *"-artifacts" ]]; then
           echo "3"
           UPLOAD_ARTIFACTS=true
       fi
@@ -311,8 +312,12 @@ for:
           echo %APPVEYOR_REPO_BRANCH%
           echo %UPLOAD_ARTIFACTS%
 
+          setlocal ENABLEEXTENSIONS
+          if errorlevel 1 echo Unable to enable extensions
+          if defined %APPVEYOR_REPO_TAG_NAME% (set UPLOAD_ARTIFACTS="true") else (echo Not at tag)
+          endlocal
+
           if not "%APPVEYOR_REPO_BRANCH%"=="%APPVEYOR_REPO_BRANCH:-artifacts=%" set UPLOAD_ARTIFACTS="true"
-          if %APPVEYOR_REPO_TAG%  set UPLOAD_ARTIFACTS="true"
 
           echo %APPVEYOR_REPO_TAG%
           echo %APPVEYOR_REPO_BRANCH%
