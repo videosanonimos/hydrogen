@@ -92,11 +92,11 @@ init:
           echo "1"
           UPLOAD_ARTIFACTS=true
       fi
-      if [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts" ]; then
+      if [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts"* ]; then
           echo "2"
           UPLOAD_ARTIFACTS=true
       fi
-      if [ "$APPVEYOR_REPO_TAG" == "true" ] || [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts" ]; then
+      if [ "$APPVEYOR_REPO_TAG" == "true" ] || [ "$APPVEYOR_REPO_BRANCH" == *"-artifacts"* ]; then
           echo "3"
           UPLOAD_ARTIFACTS=true
       fi
