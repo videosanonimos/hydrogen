@@ -312,7 +312,7 @@ for:
           echo %UPLOAD_ARTIFACTS%
 
           if not "%APPVEYOR_REPO_BRANCH%"=="%APPVEYOR_REPO_BRANCH:-artifacts=%" set UPLOAD_ARTIFACTS="true"
-          if %APPVEYOR_REPO_TAG%=="true"  set UPLOAD_ARTIFACTS="true"
+          if %APPVEYOR_REPO_TAG%  set UPLOAD_ARTIFACTS="true"
 
           echo %APPVEYOR_REPO_TAG%
           echo %APPVEYOR_REPO_BRANCH%
