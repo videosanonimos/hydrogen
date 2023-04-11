@@ -90,7 +90,7 @@ matrix:
 init:
   - sh: |-
       echo $UPLOAD_ARTIFACTS
-      if [[ -v APPVEYOR_REPO_TAG_NAME ]]; then
+      if [[ "$APPVEYOR_REPO_TAG_NAME" ]]; then
           echo "1"
           UPLOAD_ARTIFACTS=true
       fi
@@ -98,7 +98,7 @@ init:
           echo "2"
           UPLOAD_ARTIFACTS=true
       fi
-      if [[ -v APPVEYOR_REPO_TAG_NAME || "$APPVEYOR_REPO_BRANCH" == *"-artifacts" ]]; then
+      if [[ "$APPVEYOR_REPO_TAG_NAME" || "$APPVEYOR_REPO_BRANCH" == *"-artifacts" ]]; then
           echo "3"
           UPLOAD_ARTIFACTS=true
       fi
@@ -312,10 +312,14 @@ for:
           echo %APPVEYOR_REPO_BRANCH%
           echo %UPLOAD_ARTIFACTS%
 
-          setlocal ENABLEEXTENSIONS
-          if errorlevel 1 echo Unable to enable extensions
-          if defined %APPVEYOR_REPO_TAG_NAME% (set UPLOAD_ARTIFACTS="true") else (echo Not at tag)
-          endlocal
+          if defined APPVEYOR_REPO_TAG_NAME (
+             echo Tag name defined
+             set UPLOAD_ARTIFACTS="true"
+          ) else (
+             echo No tag name defined
+          )
+          
+          echo %UPLOAD_ARTIFACTS%
 
           if not "%APPVEYOR_REPO_BRANCH%"=="%APPVEYOR_REPO_BRANCH:-artifacts=%" set UPLOAD_ARTIFACTS="true"
 
