@@ -43,8 +43,6 @@
 
 environment:
   GENERATOR: "MinGW Makefiles"
-  APPVEYOR_REPO_TAG: true
-  APPVEYOR_REPO_TAG_NAME: 'jens peter'
   UPLOAD_ARTIFACTS: false
   TARGET_VERSION: '1.2.0'
   matrix:
