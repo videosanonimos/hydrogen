@@ -241,6 +241,7 @@ void XmlTest::testDrumkitUpgrade() {
 	for ( const auto& ssFile : legacyDir.entryList( nameFilters, QDir::Files ) ) {
 
 		sDrumkitPath = H2TEST_FILE( "drumkits/legacyKits" ) + "/" + ssFile;
+		qDebug() << "[XmlTest::testDrumkitUpgrade()] sDrumkitPath: " << sDrumkitPath;
 
 		CPPUNIT_ASSERT( ! pCoreActionController->validateDrumkit( sDrumkitPath, false ) );
 
@@ -250,6 +251,8 @@ void XmlTest::testDrumkitUpgrade() {
 									   QTime::currentTime().toString( "hh:mm:ss.zzz" ) +
 									   "-XXXXXX" );
 		contentOriginal.setAutoRemove( false );
+		
+		qDebug() << "[XmlTest::testDrumkitUpgrade()] contentOriginal.path(): " << contentOriginal.path();
 		CPPUNIT_ASSERT( pCoreActionController->extractDrumkit( sDrumkitPath,
 															   contentOriginal.path() ) );
 		QDir contentDirOriginal( contentOriginal.path() );
@@ -265,10 +268,14 @@ void XmlTest::testDrumkitUpgrade() {
 									QTime::currentTime().toString( "hh:mm:ss.zzz" ) +
 									"-XXXXXX" );
 		firstUpgrade.setAutoRemove( false );
+		qDebug() << "[XmlTest::testDrumkitUpgrade()] H2Core::Filesystem::tmp_dir(): " << H2Core::Filesystem::tmp_dir();
+		qDebug() << "[XmlTest::testDrumkitUpgrade()] firstUpgrade.path(): " << firstUpgrade.path();
 		CPPUNIT_ASSERT( pCoreActionController->upgradeDrumkit( sDrumkitPath,
 															   firstUpgrade.path() ) );
 		// The upgrade should have yielded a single .h2drumkit file.
 		QDir upgradeFolder( firstUpgrade.path() );
+		qDebug() << "[XmlTest::testDrumkitUpgrade()] upgradeFolder content (raw): " << upgradeFolder.entryList();
+		qDebug() << "[XmlTest::testDrumkitUpgrade()] upgradeFolder content (filtered): " << upgradeFolder.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
 		CPPUNIT_ASSERT( upgradeFolder.entryList( QDir::AllEntries |
 												 QDir::NoDotAndDotDot ).size() == 1 );
 		
