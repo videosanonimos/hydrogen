@@ -264,11 +264,45 @@ void XmlTest::testDrumkitUpgrade() {
 			} else {
 				qDebug() << "test2 invalid";
 			}
+			
 			QTemporaryDir test3( H2Core::Filesystem::tmp_dir() + "/testtest" );
 			if ( test3.isValid() ) {
 				qDebug() << "test3 valid";
 			} else {
 				qDebug() << "test3 invalid";
+			}
+			
+			QTemporaryDir test4( H2Core::Filesystem::tmp_dir() + 
+									   "testDrumkitUpgrade_orig-" );
+			if ( test4.isValid() ) {
+				qDebug() << "test4 valid";
+			} else {
+				qDebug() << "test4 invalid";
+			}
+
+			QTemporaryDir test5( H2Core::Filesystem::tmp_dir() + 
+									   QTime::currentTime().toString( "hh:mm:ss.zzz" ) );
+			if ( test5.isValid() ) {
+				qDebug() << "test5 valid";
+			} else {
+				qDebug() << "test5 invalid";
+			}
+
+			QTemporaryDir test6( H2Core::Filesystem::tmp_dir() + 
+									   "-XXXXXX" );
+			if ( test6.isValid() ) {
+				qDebug() << "test6 valid";
+			} else {
+				qDebug() << "test6 invalid";
+			}
+
+			QTemporaryDir test7( H2Core::Filesystem::tmp_dir() +
+									   "testDrumkitUpgrade_orig-" +
+									   "-XXXXXX" );
+			if ( test7.isValid() ) {
+				qDebug() << "test7 valid";
+			} else {
+				qDebug() << "test7 invalid";
 			}
 		}
 		contentOriginal.setAutoRemove( false );
