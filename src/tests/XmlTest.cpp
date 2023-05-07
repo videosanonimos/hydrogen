@@ -248,7 +248,7 @@ void XmlTest::testDrumkitUpgrade() {
 		// The number of files within the drumkit has to be constant.
 		QTemporaryDir contentOriginal( H2Core::Filesystem::tmp_dir() +
 									   "testDrumkitUpgrade_orig-" +
-									   QTime::currentTime().toString( "hh:mm:ss.zzz" ) +
+									   QTime::currentTime().toString( "hh-mm-ss-zzz" ) +
 									   "-XXXXXX" );
 		if ( ! contentOriginal.isValid() ) {
 			qDebug() << "invalid contentOriginal";
@@ -281,7 +281,7 @@ void XmlTest::testDrumkitUpgrade() {
 			}
 
 			QTemporaryDir test5( H2Core::Filesystem::tmp_dir() + 
-									   QTime::currentTime().toString( "hh:mm:ss.zzz" ) );
+									   QTime::currentTime().toString( "hh-mm-ss-zzz" ) );
 			if ( test5.isValid() ) {
 				qDebug() << "test5 valid";
 			} else {
@@ -311,7 +311,7 @@ void XmlTest::testDrumkitUpgrade() {
 		qDebug() << "[XmlTest::testDrumkitUpgrade()] temp dir string: " <<
 			H2Core::Filesystem::tmp_dir() +
 			"testDrumkitUpgrade_orig-" +
-			QTime::currentTime().toString( "hh:mm:ss.zzz" ) +
+			QTime::currentTime().toString( "hh-mm-ss-zzz" ) +
 			"-XXXXXX";
 		qDebug() << "[XmlTest::testDrumkitUpgrade()] contentOriginal.path(): " << contentOriginal.path();
 		CPPUNIT_ASSERT( pCoreActionController->extractDrumkit( sDrumkitPath,
@@ -326,7 +326,7 @@ void XmlTest::testDrumkitUpgrade() {
 		// the variable gets out of scope)
 		QTemporaryDir firstUpgrade( H2Core::Filesystem::tmp_dir() +
 									"testDrumkitUpgrade_firstUpgrade-" +
-									QTime::currentTime().toString( "hh:mm:ss.zzz" ) +
+									QTime::currentTime().toString( "hh-mm-ss-zzz" ) +
 									"-XXXXXX" );
 		if ( ! firstUpgrade.isValid() ) {
 			qDebug() << "invalid first upgrade dir";
@@ -378,7 +378,7 @@ void XmlTest::testDrumkitUpgrade() {
 		
 		QTemporaryDir contentUpgraded( H2Core::Filesystem::tmp_dir() +
 									"testDrumkitUpgrade_contentUpgraded-" +
-									QTime::currentTime().toString( "hh:mm:ss.zzz" ) +
+									QTime::currentTime().toString( "hh-mm-ss-zzz" ) +
 									"-XXXXXX" );
 		contentUpgraded.setAutoRemove( false );
 		CPPUNIT_ASSERT( pCoreActionController->extractDrumkit( sUpgradedKit,
@@ -407,7 +407,7 @@ void XmlTest::testDrumkitUpgrade() {
 		// the results.
 		QTemporaryDir secondUpgrade( H2Core::Filesystem::tmp_dir() +
 									"testDrumkitUpgrade_secondUpgrade-" +
-									QTime::currentTime().toString( "hh:mm:ss.zzz" ) +
+									QTime::currentTime().toString( "hh-mm-ss-zzz" ) +
 									 "-XXXXXX" );
 		secondUpgrade.setAutoRemove( false );
 		CPPUNIT_ASSERT( pCoreActionController->upgradeDrumkit( sUpgradedKit,
@@ -422,7 +422,7 @@ void XmlTest::testDrumkitUpgrade() {
 
 		QTemporaryDir contentValidation( H2Core::Filesystem::tmp_dir() +
 										 "testDrumkitUpgrade_contentValidation-" +
-										 QTime::currentTime().toString( "hh:mm:ss.zzz" ) +
+										 QTime::currentTime().toString( "hh-mm-ss-zzz" ) +
 										 "-XXXXXX" );
 		contentValidation.setAutoRemove( false );
 		CPPUNIT_ASSERT( pCoreActionController->extractDrumkit( sUpgradedKit,
